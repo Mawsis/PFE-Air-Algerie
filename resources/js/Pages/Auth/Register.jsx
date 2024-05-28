@@ -6,9 +6,12 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
 
-export default function Register() {
+export default function Register({ directions }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
+        nom: '',
+        prenom: '',
+        telephone: '',
+        direction_id: 0,
         email: '',
         password: '',
         password_confirmation: '',
@@ -31,21 +34,54 @@ export default function Register() {
             <Head title="Register" />
 
             <form onSubmit={submit}>
-                <div>
-                    <InputLabel htmlFor="name" value="Name" />
+                <div >
+                    <InputLabel htmlFor="nom" value="Nom" />
 
                     <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
+                        id="nom"
+                        name="nom"
+                        value={data.nom}
                         className="mt-1 block w-full"
-                        autoComplete="name"
+                        autoComplete="nom"
                         isFocused={true}
-                        onChange={(e) => setData('name', e.target.value)}
+                        onChange={(e) => setData('nom', e.target.value)}
                         required
                     />
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.nom} className="mt-2" />
+                </div>
+                <div className="mt-4">
+                    <InputLabel htmlFor="prenom" value="Prenom" />
+
+                    <TextInput
+                        id="prenom"
+                        name="prenom"
+                        value={data.prenom}
+                        className="mt-1 block w-full"
+                        autoComplete="prenom"
+                        isFocused={true}
+                        onChange={(e) => setData('prenom', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.prenom} className="mt-2" />
+                </div>
+
+                <div className="mt-4">
+                    <InputLabel htmlFor="telephone" value="Telephone" />
+
+                    <TextInput
+                        id="telephone"
+                        name="telephone"
+                        value={data.telephone}
+                        className="mt-1 block w-full"
+                        autoComplete="telephone"
+                        isFocused={true}
+                        onChange={(e) => setData('telephone', e.target.value)}
+                        required
+                    />
+
+                    <InputError message={errors.telephone} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
