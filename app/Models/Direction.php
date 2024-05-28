@@ -16,6 +16,6 @@ class Direction extends Model
 
     public function chef()
     {
-        return $this->hasOne(Chef::class, 'chef_id');
+        return $this->hasOne(User::class, 'chef_id');
     }
 }

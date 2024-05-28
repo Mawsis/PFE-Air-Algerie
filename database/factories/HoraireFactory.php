@@ -17,7 +17,9 @@ class HoraireFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "heure_debut" => fake()->dateTime(),
+            "heure_fin" => fake()->dateTime(),
+            "user_id" => 3,
         ];
     }
 }

@@ -72,4 +72,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(SoldeConge::class, "user_id");
     }
+    public function directionManage()
+    {
+        return $this->hasOne(Direction::class, 'chef_id');
+    }
 }

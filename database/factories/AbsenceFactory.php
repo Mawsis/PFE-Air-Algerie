@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Horaire;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class AbsenceFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "valide" => fake()->boolean,
+            "user_id" => 3,
+            "horaire_id" => Horaire::factory()->create()->id,
         ];
     }
 }

@@ -39,7 +39,8 @@ Route::middleware('auth')->middleware('isChef')->group(function () {
     Route::get('/demande_conge_chef', [DemandeCongeController::class, 'indexChef'])->name('demande-conge-chef');
     Route::patch('/demande_conge_chef/{demande}', [DemandeCongeController::class, 'update'])->name('demande-conge-chef.update');
 
-    Route::get('/absences/{employee}', [AbsenceController::class, 'index'])->name('absences');
+    Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
+    Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
 });
 
 require __DIR__ . '/auth.php';
