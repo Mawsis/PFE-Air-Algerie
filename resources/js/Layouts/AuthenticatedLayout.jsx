@@ -8,7 +8,7 @@ import { Link } from "@inertiajs/react";
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
-
+    console.log(user.status);
     return (
         <div className="min-h-screen bg-custom">
             <nav className="bg-white border-b border-gray-100">
@@ -22,14 +22,37 @@ export default function Authenticated({ user, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink
-                                    href={route("dashboard")}
-                                    active={route().current("dashboard")}
-                                >
-                                    Calendrier
-                                </NavLink>
-                                <NavLink>Solde de Conge</NavLink>
-                                <NavLink>Solde de Conge</NavLink>
+                                {user.status === "employee" && (
+                                    <>
+                                        <NavLink
+                                            href={route("dashboard")}
+                                            active={route().current(
+                                                "dashboard"
+                                            )}
+                                        >
+                                            Calendrier
+                                        </NavLink>
+                                        <NavLink>Solde de Conge</NavLink>
+                                    </>
+                                )}
+                                {(user.status === "chef" ||
+                                    user.status === "admin") && (
+                                    <>
+                                        <NavLink>Gerer Les Horaires</NavLink>
+                                        <NavLink>Les Demandes de Conge</NavLink>
+                                        <NavLink>
+                                            Consulter les absences
+                                        </NavLink>
+                                    </>
+                                )}
+                                {user.status === "admin" && (
+                                    <>
+                                        <NavLink>
+                                            Demandes d'inscription
+                                        </NavLink>
+                                        <NavLink>Gerer les comptes</NavLink>
+                                    </>
+                                )}
                             </div>
                         </div>
 
@@ -45,7 +68,7 @@ export default function Authenticated({ user, header, children }) {
                                                 {user.name}
 
                                                 <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
+                                                    className="ms-2 -me-0.5 h-6 w-6"
                                                     xmlns="http://www.w3.org/2000/svg"
                                                     viewBox="0 0 20 20"
                                                     fill="currentColor"

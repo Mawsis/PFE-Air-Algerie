@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'nom' => 'Chef',
             'email' => 'chef@example.com',
-            'status' => 'chef',
+            'status' => 'admin',
             'direction_id' => $direction->id,
         ]);
         User::factory()->create([
