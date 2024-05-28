@@ -11,8 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('demande_conges', function (Blueprint $table) {
             $table->id();
+            $table->date('date_debut');
+            $table->date('date_fin');
+            $table->enum('status', ['en attente', 'approuvée', 'refuse']);
+
+            $table->foreignId('user_id');
+
             $table->timestamps();
         });
     }
@@ -22,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('employees');
+        Schema::dropIfExists('demande_conges');
     }
 };

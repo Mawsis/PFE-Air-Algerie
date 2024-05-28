@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Direction;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -13,11 +14,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $direction = Direction::factory()->create();
 
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'nom' => 'Chef',
+            'email' => 'chef@example.com',
+            'status' => 'chef',
+            'direction_id' => $direction->id,
+        ]);
+        User::factory()->create([
+            'nom' => 'user',
+            'email' => 'user@example.com',
+            'status' => 'employee',
+            'direction_id' => $direction->id,
         ]);
     }
 }

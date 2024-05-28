@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'users';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -44,4 +46,32 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function direction()
+    {
+        return $this->belongsTo(Direction::class);
+    }
+
+    public function horaires()
+    {
+        return $this->hasMany(Horaire::class);
+    }
+
+
+    public function absences()
+    {
+        return $this->hasMany(Absence::class);
+    }
+
+    public function demandesConge()
+    {
+        return $this->hasMany(DemandeConge::class);
+    }
+
+    public function soldeConge()
+    {
+        return $this->hasMany(SoldeConge::class);
+    }
+
+
 }
