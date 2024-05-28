@@ -17,7 +17,10 @@ class SoldeCongeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'annee' => fake()->year(),
+            'jours_total' => '30',
+            'jours_consommes' => '0',
+            'user_id' => 1
         ];
     }
 }

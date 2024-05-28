@@ -17,7 +17,10 @@ class DemandeCongeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'date_debut' => fake()->date(),
+            'date_fin' => fake()->date(),
+            'status' => 'en attente',
+            'user_id' => 1,
         ];
     }
 }

@@ -32,7 +32,14 @@ export default function Authenticated({ user, header, children }) {
                                         >
                                             Calendrier
                                         </NavLink>
-                                        <NavLink>Solde de Conge</NavLink>
+                                        <NavLink
+                                            href={route("demande-conge")}
+                                            active={route().current(
+                                                "demande-conge"
+                                            )}
+                                        >
+                                            Solde de Conge
+                                        </NavLink>
                                     </>
                                 )}
                                 {(user.status === "chef" ||

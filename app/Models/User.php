@@ -65,13 +65,11 @@ class User extends Authenticatable
 
     public function demandesConge()
     {
-        return $this->hasMany(DemandeConge::class);
+        return $this->hasMany(DemandeConge::class, "user_id");
     }
 
-    public function soldeConge()
+    public function soldesConge()
     {
-        return $this->hasMany(SoldeConge::class);
+        return $this->hasMany(SoldeConge::class, "user_id");
     }
-
-
 }
