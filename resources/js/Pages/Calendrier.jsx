@@ -1,7 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import illustration from "@/Assets/illsutration.jpg";
-
+import { Calendar } from "@/components/ui/calendar";
+import { useState } from "react";
 const getCurrentDate = () => {
     const date = new Date();
     const year = date.getFullYear();
@@ -11,7 +12,45 @@ const getCurrentDate = () => {
     return `${year}-${month}-${day}`;
 };
 
-export default function Calendrier({ auth }) {
+const makeDateList = (horaires) => {
+    return horaires.map((horaire) => {
+        return new Date(horaire.heure_debut);
+    });
+};
+
+export default function Calendrier({ auth, horaires }) {
+    const [selectedDates, setSelectedDates] = useState([
+        new Date("2024-05-01"),
+        new Date("2024-05-02"),
+        new Date("2024-05-03"),
+        new Date("2024-05-04"),
+        new Date("2024-05-05"),
+        new Date("2024-05-06"),
+        new Date("2024-05-07"),
+        new Date("2024-05-08"),
+        new Date("2024-05-09"),
+        new Date("2024-05-10"),
+        new Date("2024-05-11"),
+        new Date("2024-05-12"),
+        new Date("2024-05-13"),
+        new Date("2024-05-14"),
+        new Date("2024-05-15"),
+        new Date("2024-05-16"),
+        new Date("2024-05-17"),
+        new Date("2024-05-18"),
+        new Date("2024-05-19"),
+        new Date("2024-05-20"),
+        new Date("2024-05-21"),
+        new Date("2024-05-22"),
+        new Date("2024-05-23"),
+        new Date("2024-05-24"),
+        new Date("2024-05-25"),
+        new Date("2024-05-26"),
+        new Date("2024-05-27"),
+        new Date("2024-05-28"),
+        new Date(),
+    ]);
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -22,7 +61,6 @@ export default function Calendrier({ auth }) {
             }
         >
             <Head title="Calendrier" />
-
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -55,6 +93,17 @@ export default function Calendrier({ auth }) {
                                 <button className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold text-lg border border-main hover:bg-white hover:text-main ">
                                     Se Pointer
                                 </button>
+                            </div>
+                            {/* TODO Make a component called employeeCalendar*/}
+                            <div>
+                                <Calendar
+                                    mode="single"
+                                    selected={selectedDates}
+                                    onSelect={(dates) =>
+                                        setSelectedDates(dates || [])
+                                    }
+                                    disabled
+                                />
                             </div>
                         </div>
                     </div>

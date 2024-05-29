@@ -1,9 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
-import InputLabel from "@/Components/InputLabel";
+import InputLabel from "@/components/InputLabel";
 import { PlusCircle } from "lucide-react";
-import InputError from "@/Components/InputError";
+import InputError from "@/components/InputError";
 
 const DemandeConge = ({ auth, demandes, soldes }) => {
     const user = usePage().props.auth.user;

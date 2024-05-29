@@ -11,7 +11,13 @@ export default function Register({ directions }) {
         nom: "",
         prenom: "",
         telephone: "",
+        nom: "",
+        prenom: "",
+        telephone: "",
         direction_id: 0,
+        email: "",
+        password: "",
+        password_confirmation: "",
         email: "",
         password: "",
         password_confirmation: "",
@@ -19,6 +25,7 @@ export default function Register({ directions }) {
 
     useEffect(() => {
         return () => {
+            reset("password", "password_confirmation");
             reset("password", "password_confirmation");
         };
     }, []);
@@ -30,6 +37,7 @@ export default function Register({ directions }) {
         e.preventDefault();
 
         post(route("register"));
+        post(route("register"));
     };
 
     return (
@@ -37,6 +45,7 @@ export default function Register({ directions }) {
             <Head title="Register" />
 
             <form onSubmit={submit}>
+                <div>
                 <div>
                     <InputLabel htmlFor="nom" value="Nom" />
 
@@ -47,6 +56,7 @@ export default function Register({ directions }) {
                         className="mt-1 block w-full"
                         autoComplete="nom"
                         isFocused={true}
+                        onChange={(e) => setData("nom", e.target.value)}
                         onChange={(e) => setData("nom", e.target.value)}
                         required
                     />
@@ -63,6 +73,7 @@ export default function Register({ directions }) {
                         className="mt-1 block w-full"
                         autoComplete="prenom"
                         isFocused={true}
+                        onChange={(e) => setData("prenom", e.target.value)}
                         onChange={(e) => setData("prenom", e.target.value)}
                         required
                     />
@@ -81,6 +92,7 @@ export default function Register({ directions }) {
                         autoComplete="telephone"
                         isFocused={true}
                         onChange={(e) => setData("telephone", e.target.value)}
+                        onChange={(e) => setData("telephone", e.target.value)}
                         required
                     />
 
@@ -97,6 +109,7 @@ export default function Register({ directions }) {
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
+                        onChange={(e) => setData("email", e.target.value)}
                         onChange={(e) => setData("email", e.target.value)}
                         required
                     />
@@ -115,6 +128,7 @@ export default function Register({ directions }) {
                         className="mt-1 block w-full"
                         autoComplete="new-password"
                         onChange={(e) => setData("password", e.target.value)}
+                        onChange={(e) => setData("password", e.target.value)}
                         required
                     />
 
@@ -122,6 +136,10 @@ export default function Register({ directions }) {
                 </div>
 
                 <div className="mt-4">
+                    <InputLabel
+                        htmlFor="password_confirmation"
+                        value="Confirm Password"
+                    />
                     <InputLabel
                         htmlFor="password_confirmation"
                         value="Confirm Password"
@@ -137,9 +155,16 @@ export default function Register({ directions }) {
                         onChange={(e) =>
                             setData("password_confirmation", e.target.value)
                         }
+                        onChange={(e) =>
+                            setData("password_confirmation", e.target.value)
+                        }
                         required
                     />
 
+                    <InputError
+                        message={errors.password_confirmation}
+                        className="mt-2"
+                    />
                     <InputError
                         message={errors.password_confirmation}
                         className="mt-2"
@@ -169,6 +194,7 @@ export default function Register({ directions }) {
                 </div>
                 <div className="flex items-center justify-end mt-4">
                     <Link
+                        href={route("login")}
                         href={route("login")}
                         className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >

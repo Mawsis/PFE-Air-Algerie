@@ -1,4 +1,4 @@
-import DemandeCongeEnvoye from "@/Components/DemandeCongeEnvoye";
+import DemandeCongeEnvoye from "@/components/DemandeCongeEnvoye";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
