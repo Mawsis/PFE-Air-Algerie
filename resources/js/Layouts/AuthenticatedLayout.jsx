@@ -1,14 +1,15 @@
 import { useState } from "react";
-import ApplicationLogo from "@/Components/ApplicationLogo";
-import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/NavLink";
-import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
+import ApplicationLogo from "@/components/ApplicationLogo";
+import Dropdown from "@/components/Dropdown";
+import NavLink from "@/components/NavLink";
+import ResponsiveNavLink from "@/components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     console.log(user.status);
+    user.status = "employee";
     return (
         <div className="min-h-screen bg-custom">
             <nav className="bg-white border-b border-gray-100">
