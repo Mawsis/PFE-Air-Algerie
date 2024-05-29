@@ -13,7 +13,7 @@ class AbsenceController extends Controller
     {
         $absences = collect(); // Initialize an empty collection
         if (auth()->user()->status === 'chef') {
-            $direction =  auth()->user()->directionManage;
+            $direction =  auth()->user()->directionManage->nom;
             $chef = Chef::find(auth()->user()->id);
             foreach ($chef->employees as $employee) {
                 $absences = $absences->merge($employee->absences()->with('employee')->with('horaire')->get());
