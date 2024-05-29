@@ -4,15 +4,12 @@ import { Link } from "@inertiajs/react";
 export default function Guest({ children }) {
     return (
         <div className="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-            <div>
+            <div className="w-60">
                 <Link
                     href="/"
                     className="flex justify-content items-center gap-10"
                 >
-                    <ApplicationLogo className="w-20 h-20 fill-current text-gray-500" />
-                    <h1 className="text-3xl font-bold text-gray-700">
-                        Air Algerie
-                    </h1>
+                    <ApplicationLogo className="w-full h-full fill-current text-gray-500" />
                 </Link>
             </div>
 
