@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
 
         Route::middleware('isChef')->group(function () {
             Route::get('/demande_conge_chef', [DemandeCongeController::class, 'indexChef'])->name('demande-conge-chef');
-            Route::patch('/demande_conge_chef/{demande}', [DemandeCongeController::class, 'update'])->name('demande-conge-chef.update');
+            Route::patch('/demande_conge_chef/{demande}/{status}', [DemandeCongeController::class, 'patch'])->name('demande-conge-chef.patch');
 
             Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
             Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');

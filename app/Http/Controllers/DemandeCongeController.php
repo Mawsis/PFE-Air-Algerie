@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chef;
 use App\Models\DemandeConge;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -42,15 +43,28 @@ class DemandeCongeController extends Controller
     }
     public function indexChef()
     {
+        $demandes = collect();
         //get all demandesConge from chef's employees
-        $chef = Chef::find(auth()->user()->id);
-        $demandes = collect(); // Initialize an empty collection
-        foreach ($chef->employees as $employee) {
-            $demandes = $demandes->merge($employee->demandesConge()->with('employee')->get());
+        if (auth()->user()->status === 'chef') {
+            $chef = Chef::find(auth()->user()->id);
+            foreach ($chef->employees as $employee) {
+                $demandes = $demandes->merge($employee->demandesConge()->with('employee')->get());
+            }
+        } elseif (auth()->user()->status === 'admin') {
+            foreach (User::where('status', 'employee')->get() as $employee) {
+                $demandes = $demandes->merge($employee->demandesConge()->with('employee')->get());
+            }
         }
 
         return Inertia::render('DemandeCongeChef', [
             'demandes' => $demandes,
         ]);
+    }
+    public function patch(DemandeConge $demande, string $status)
+    {
+        $demande->status = $status;
+        $demande->save();
+
+        return redirect()->route('demande-conge-chef');
     }
 }

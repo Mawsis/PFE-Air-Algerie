@@ -25,7 +25,7 @@ const DemandeCongeChef = ({ auth, demandes, soldes }) => {
                             </h2>
                         </div>
                         <div className="px-4">
-                            <DemandeCongeEnvoyeChef />
+                            <DemandeCongeEnvoyeChef demandes={demandes} />
                         </div>
                     </div>
                 </div>
