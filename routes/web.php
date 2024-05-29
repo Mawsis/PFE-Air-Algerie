@@ -8,41 +8,41 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Calendrier',);
-})->middleware('auth')->name('/');
 
-Route::get('/about', function () {
-    return Inertia::render('AttenteAdmin');
-})->middleware('auth')->middleware('isChef');
 
-Route::get('/contact', function () {
-    return Inertia::render('Contact');
-})->middleware('auth');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+    Route::get('/wait', function () {
+        return Inertia::render('AttenteAdmin');
+    })->name('wait');
+    Route::middleware('isEmployee')->group(function () {
+        Route::get('/', function () {
+            return Inertia::render('Calendrier',);
+        })->name('/');
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/demande_conge', [DemandeCongeController::class, 'index'])->name('demande-conge');
+        Route::get('/demander_conge', [DemandeCongeController::class, 'create'])->name('demander-conge.create');
+        Route::post('/demander_conge', [DemandeCongeController::class, 'store'])->name('demander-conge.store');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/demande_conge', [DemandeCongeController::class, 'index'])->name('demande-conge');
-    Route::get('/demander_conge', [DemandeCongeController::class, 'create'])->name('demander-conge.create');
-    Route::post('/demander_conge', [DemandeCongeController::class, 'store'])->name('demander-conge.store');
-});
+        Route::middleware('isChef')->group(function () {
+            Route::get('/demande_conge_chef', [DemandeCongeController::class, 'indexChef'])->name('demande-conge-chef');
+            Route::patch('/demande_conge_chef/{demande}', [DemandeCongeController::class, 'update'])->name('demande-conge-chef.update');
 
-Route::middleware('auth')->middleware('isChef')->group(function () {
-    Route::get('/demande_conge_chef', [DemandeCongeController::class, 'indexChef'])->name('demande-conge-chef');
-    Route::patch('/demande_conge_chef/{demande}', [DemandeCongeController::class, 'update'])->name('demande-conge-chef.update');
-
-    Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
-    Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
-    Route::get('/absences/{employee}/rapport', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+            Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
+            Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
+            Route::get('/absences/{employee}/rapport', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+        });
+        Route::middleware('isAdmin')->group(function () {
+            Route::get('/demandes_inscription', [DemandeInscriptionController::class, 'index'])->name('demandes-inscription');
+            Route::patch('/demandes_inscription/{employee}/{status}', [DemandeInscriptionController::class, 'patch'])->name('demandes-inscription.patch');
+        });
+    });
 });
+Route::get("/404", function () {
+    return Inertia::render('NotFound');
+})->name('NotFound');
 
-Route::middleware('auth')->middleware('isAdmin')->group(function () {
-    Route::get('/demande_inscription', [DemandeInscriptionController::class, 'index'])->name('demande-inscription');
-});
 
 require __DIR__ . '/auth.php';

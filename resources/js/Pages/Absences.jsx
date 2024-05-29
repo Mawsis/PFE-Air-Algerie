@@ -22,13 +22,15 @@ const Absences = ({ auth, direction, absences, employee }) => {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex flex-col">
-                        <h2 className="text-lg font-medium">
-                            Absence des employes de la direction {direction.nom}{" "}
-                            :
-                        </h2>
+                        {!employee && (
+                            <h2 className="text-lg font-medium">
+                                Absence des employes de la direction:{" "}
+                                <b>{direction}</b>
+                            </h2>
+                        )}
                         {employee && (
                             <div className="flex justify-between items-center">
-                                <h3 className=" text-base font-medium">
+                                <h3 className=" text-lg font-medium">
                                     L'employe: {employee.nom + employee.prenom}
                                 </h3>
                                 <Link

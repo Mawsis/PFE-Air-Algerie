@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('horaires', function (Blueprint $table) {
             $table->id();
-            $table->time('heure_debut');
-            $table->time('heure_fin');
+            $table->dateTime('heure_debut');
+            $table->dateTime('heure_fin');
             $table->boolean('present')->default(false);
 
             $table->foreignId('user_id');

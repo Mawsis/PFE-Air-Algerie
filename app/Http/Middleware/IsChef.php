@@ -20,6 +20,6 @@ class IsChef
             return $next($request);
         }
 
-        return redirect('/contact');
+        return redirect('/');
     }
 }

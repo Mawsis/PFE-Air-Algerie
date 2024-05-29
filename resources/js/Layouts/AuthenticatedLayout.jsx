@@ -61,9 +61,9 @@ export default function Authenticated({ user, header, children }) {
                                 {user.status === "admin" && (
                                     <>
                                         <NavLink
-                                            href={route("demande-inscription")}
+                                            href={route("demandes-inscription")}
                                             active={route().current(
-                                                "demande-inscription"
+                                                "demandes-inscription"
                                             )}
                                         >
                                             Demandes d'inscription

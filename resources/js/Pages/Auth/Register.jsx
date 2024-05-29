@@ -1,32 +1,35 @@
-import { useEffect } from 'react';
-import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
+import { useEffect } from "react";
+import GuestLayout from "@/Layouts/GuestLayout";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Register({ directions }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        nom: '',
-        prenom: '',
-        telephone: '',
+        nom: "",
+        prenom: "",
+        telephone: "",
         direction_id: 0,
-        email: '',
-        password: '',
-        password_confirmation: '',
+        email: "",
+        password: "",
+        password_confirmation: "",
     });
 
     useEffect(() => {
         return () => {
-            reset('password', 'password_confirmation');
+            reset("password", "password_confirmation");
         };
     }, []);
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
 
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('register'));
+        post(route("register"));
     };
 
     return (
@@ -34,7 +37,7 @@ export default function Register({ directions }) {
             <Head title="Register" />
 
             <form onSubmit={submit}>
-                <div >
+                <div>
                     <InputLabel htmlFor="nom" value="Nom" />
 
                     <TextInput
@@ -44,7 +47,7 @@ export default function Register({ directions }) {
                         className="mt-1 block w-full"
                         autoComplete="nom"
                         isFocused={true}
-                        onChange={(e) => setData('nom', e.target.value)}
+                        onChange={(e) => setData("nom", e.target.value)}
                         required
                     />
 
@@ -60,7 +63,7 @@ export default function Register({ directions }) {
                         className="mt-1 block w-full"
                         autoComplete="prenom"
                         isFocused={true}
-                        onChange={(e) => setData('prenom', e.target.value)}
+                        onChange={(e) => setData("prenom", e.target.value)}
                         required
                     />
 
@@ -77,7 +80,7 @@ export default function Register({ directions }) {
                         className="mt-1 block w-full"
                         autoComplete="telephone"
                         isFocused={true}
-                        onChange={(e) => setData('telephone', e.target.value)}
+                        onChange={(e) => setData("telephone", e.target.value)}
                         required
                     />
 
@@ -94,7 +97,7 @@ export default function Register({ directions }) {
                         value={data.email}
                         className="mt-1 block w-full"
                         autoComplete="username"
-                        onChange={(e) => setData('email', e.target.value)}
+                        onChange={(e) => setData("email", e.target.value)}
                         required
                     />
 
@@ -111,7 +114,7 @@ export default function Register({ directions }) {
                         value={data.password}
                         className="mt-1 block w-full"
                         autoComplete="new-password"
-                        onChange={(e) => setData('password', e.target.value)}
+                        onChange={(e) => setData("password", e.target.value)}
                         required
                     />
 
@@ -119,7 +122,10 @@ export default function Register({ directions }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
+                    <InputLabel
+                        htmlFor="password_confirmation"
+                        value="Confirm Password"
+                    />
 
                     <TextInput
                         id="password_confirmation"
@@ -128,16 +134,43 @@ export default function Register({ directions }) {
                         value={data.password_confirmation}
                         className="mt-1 block w-full"
                         autoComplete="new-password"
-                        onChange={(e) => setData('password_confirmation', e.target.value)}
+                        onChange={(e) =>
+                            setData("password_confirmation", e.target.value)
+                        }
                         required
                     />
 
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                    <InputError
+                        message={errors.password_confirmation}
+                        className="mt-2"
+                    />
                 </div>
+                <div className="mt-4 text-gray-700">
+                    <label
+                        for="countries"
+                        class="block mb-2 text-sm font-medium"
+                    >
+                        Direction
+                    </label>
 
+                    <select
+                        id="countries"
+                        class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg block w-full p-2.5"
+                        required
+                        onChange={(e) => {
+                            setData("direction_id", parseInt(e.target.value));
+                        }}
+                    >
+                        {directions.map((direction) => (
+                            <option key={direction.id} value={direction.id}>
+                                {direction.nom}
+                            </option>
+                        ))}
+                    </select>
+                </div>
                 <div className="flex items-center justify-end mt-4">
                     <Link
-                        href={route('login')}
+                        href={route("login")}
                         className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Already registered?

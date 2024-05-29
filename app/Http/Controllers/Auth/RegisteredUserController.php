@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Direction;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +21,9 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('Auth/Register');
+        return Inertia::render('Auth/Register', [
+            'directions' => Direction::all(),
+        ]);
     }
 
     /**
@@ -30,12 +33,27 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
-            'telephone' => 'required|string|max:255',
-            'email' => 'required|string|lowercase|email|max:255|unique:' . User::class,
+            'nom' => 'required|alpha',
+            'prenom' => 'required|alpha',
+            'telephone' => 'required|numeric|unique:' . User::class,
+            'email' => 'required|string|lowercase|email|unique:' . User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'direction_id' => 'required|exists:directions,id'
+        ], [
+            'nom.required' => 'Le champ nom est obligatoire.',
+            'nom.alpha' => 'Le champ nom doit contenir uniquement des lettres, des espaces, des traits d\'union et des apostrophes.',
+            'prenom.required' => 'Le champ prénom est obligatoire.',
+            'prenom.alpha' => 'Le champ prénom doit contenir uniquement des lettres, des espaces, des traits d\'union et des apostrophes.',
+            'email.required' => 'Le champ email est obligatoire.',
+            'email.email' => 'Le champ email doit être une adresse email valide.',
+            'email.unique' => 'Cette adresse email est déjà utilisée.',
+            'telephone.required' => 'Le champ téléphone est obligatoire.',
+            'telephone.numeric' => 'Le champ téléphone doit être un numéro algérien valide.',
+            'password.required' => 'Le champ mot de passe est obligatoire.',
+            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'password.confirmed' => 'Les mots de passe ne correspondent pas.',
         ]);
 
         $user = User::create([
@@ -44,6 +62,7 @@ class RegisteredUserController extends Controller
             'telephone' => $request->telephone,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'direction_id' => $request->direction_id,
         ]);
 
         event(new Registered($user));

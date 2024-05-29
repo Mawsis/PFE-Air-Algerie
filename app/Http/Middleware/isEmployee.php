@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class IsAdmin
+class isEmployee
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,15 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && auth()->user()->status === 'admin') {
+        if (
+            Auth::check() &&
+            (auth()->user()->status === 'employee'
+                || auth()->user()->status === 'admin'
+                || auth()->user()->status === 'chef')
+        ) {
             return $next($request);
         }
 
-        return redirect('/profile');
+        return redirect('wait');
     }
 }

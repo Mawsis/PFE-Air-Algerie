@@ -1,11 +1,12 @@
 import DemandeCongeEnvoyeChef from "@/Components/DemandeCongeEnvoyeChef";
+import DemandesInscriptionEnvoye from "@/Components/DemandesInscriptionEnvoye";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Link } from "@inertiajs/inertia-react";
 import { Head } from "@inertiajs/react";
 import { PlusCircle } from "lucide-react";
 import React from "react";
 
-const DemandeCongeChef = ({ auth, demandes, soldes }) => {
+const DemandesInscription = ({ auth, demandes }) => {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -21,11 +22,11 @@ const DemandeCongeChef = ({ auth, demandes, soldes }) => {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex flex-col">
                         <div className="text-gray-700 flex justify-between items-center">
                             <h2 className=" font-semibold text-lg">
-                                Les demandes de conges envoyees:
+                                Les demandes d'inscriptions:
                             </h2>
                         </div>
                         <div className="px-4">
-                            <DemandeCongeEnvoyeChef />
+                            <DemandesInscriptionEnvoye demandes={demandes} />
                         </div>
                     </div>
                 </div>
@@ -34,4 +35,4 @@ const DemandeCongeChef = ({ auth, demandes, soldes }) => {
     );
 };
 
-export default DemandeCongeChef;
+export default DemandesInscription;

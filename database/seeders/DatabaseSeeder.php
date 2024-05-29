@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             'status' => 'admin',
         ]);
         $direction = Direction::factory()->create(['chef_id' => $chef->id]);
+        $directions = Direction::factory(5)->create();
         $employee = User::factory()->create([
             'email' => 'user@example.com',
             'status' => 'employee',
@@ -48,5 +49,6 @@ class DatabaseSeeder extends Seeder
             'annee' => '2025',
         ]);
         DemandeConge::factory(10)->create();
+        User::factory(10)->create(['direction_id' => $directions[rand(0, $directions->count() - 1)]]);
     }
 }
