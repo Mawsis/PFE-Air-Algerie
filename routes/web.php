@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
             Route::patch('/demandes_inscription/{employee}/{status}', [DemandeInscriptionController::class, 'patch'])->name('demandes-inscription.patch');
 
             Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
+            Route::patch('/employees/{employee}', [EmployeeController::class, 'patch'])->name('employees.patch');
         });
     });
 });

@@ -35,10 +35,14 @@ const DemandeCongeEnvoyeChef = ({ demandes }) => {
             status: newStatus,
         };
         router.patch(
-            route("demande-conge-chef.patch", {
-                demande: id,
-                status: newStatus,
-            })
+            route(
+                "demande-conge-chef.patch",
+                {
+                    demande: id,
+                    status: newStatus,
+                },
+                { preserveState: true }
+            )
         );
         // Set the state with the new array
         setDemandesS(updatedDemandes);

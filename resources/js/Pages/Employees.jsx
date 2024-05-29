@@ -1,35 +1,44 @@
 import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import { Link, useForm, usePage } from "@inertiajs/react";
-import InputLabel from "@/Components/InputLabel";
-import { PlusCircle } from "lucide-react";
-import InputError from "@/Components/InputError";
+import { Head, router } from "@inertiajs/react";
 
-const Employees = ({ auth, employees }) => {
+const Employees = ({ auth, employees, directions }) => {
     const [employeesS, setEmployeesS] = useState(employees);
-
     const changeStatus = (id, e) => {
-        const updatedEmployees = employeesS.map((employee) => {
+        const updatedEmployees = employees.map((employee) => {
             if (employee.id === id) {
-                return {
-                    ...employee,
-                    status: e,
-                };
+                employee.status = e;
             }
         });
-        setEmployees(updatedEmployees);
+        router.patch(route("employees.patch", { employee: id, status: e }));
+        employees = updatedEmployees;
     };
     const changeType = (id, e) => {
-        const updatedEmployees = employeesS.map((employee) => {
+        const updatedEmployees = employees.map((employee) => {
             if (employee.id === id) {
-                return {
-                    ...employee,
-                    type: e,
-                };
+                employee.type = e;
             }
         });
-        setEmployees(updatedEmployees);
+        router.patch(route("employees.patch", { employee: id, type: e }));
+        employees = updatedEmployees;
+    };
+    const changeDirection = (id, e) => {
+        let direction = directions.filter((direction) => {
+            return direction.id == e;
+        });
+        direction = direction[0];
+        const updatedEmployees = employees.map((employee) => {
+            if (employee.id === id) {
+                employee.direction = direction;
+            }
+        });
+        router.patch(
+            route("employees.patch", {
+                employee: id,
+                direction_id: direction.id,
+            })
+        );
+        employees = updatedEmployees;
     };
 
     return (
@@ -45,7 +54,9 @@ const Employees = ({ auth, employees }) => {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex flex-col">
-                        Tout les employé
+                        <h2 className="font-semibold text-xl">
+                            Tout les employé:
+                        </h2>
                         <div className="mt-6">
                             <table className="table-auto w-full">
                                 <thead>
@@ -71,7 +82,7 @@ const Employees = ({ auth, employees }) => {
                                     </tr>
                                 </thead>
                                 <tbody className="text-center">
-                                    {employeesS.map((employee) => (
+                                    {employees.map((employee) => (
                                         <tr key={employee.id}>
                                             <td className="border px-4 py-2">
                                                 {employee.nom +
@@ -86,7 +97,11 @@ const Employees = ({ auth, employees }) => {
                                             </td>
                                             <td className="border px-4 py-2">
                                                 <select
-                                                    class={`${
+                                                    defaultValue={
+                                                        employee.status
+                                                    }
+                                                    key={employee.id}
+                                                    className={`${
                                                         employee.status ===
                                                         "admin"
                                                             ? "bg-green-500 text-white"
@@ -97,7 +112,7 @@ const Employees = ({ auth, employees }) => {
                                                               "employee"
                                                             ? "bg-main text-white"
                                                             : ""
-                                                    } border font-bold border-gray-300 text-gray-700 text-base rounded-lg block w-full p-2.5`}
+                                                    } border font-bold w-28 border-gray-300 text-gray-700 text-base rounded-lg block p-2.5`}
                                                     required
                                                     onChange={(e) => {
                                                         changeStatus(
@@ -122,7 +137,8 @@ const Employees = ({ auth, employees }) => {
                                             </td>
                                             <td className="border px-4 py-2">
                                                 <select
-                                                    class="bg-gray-50 border border-gray-300 text-gray-700 font-bold rounded-lg block w-full p-2.5"
+                                                    defaultValue={employee.type}
+                                                    className="bg-gray-50 border border-gray-300 text-gray-700 font-bold rounded-lg block w-32 p-2.5"
                                                     required
                                                     onChange={(e) => {
                                                         changeType(
@@ -137,18 +153,46 @@ const Employees = ({ auth, employees }) => {
                                                     <option value="Tournant2">
                                                         Tournant 2
                                                     </option>
-                                                    <option value="Tournant2">
+                                                    <option value="Tournant3">
                                                         Tournant 3
                                                     </option>
-                                                    <option value="Tournant2">
+                                                    <option value="Tournant4">
                                                         Tournant 4
                                                     </option>
                                                 </select>
                                             </td>
                                             <td className="border px-4 py-2">
-                                                {employee.direction
-                                                    ? employee.direction.nom
-                                                    : "Aucune direction"}
+                                                <select
+                                                    defaultValue={
+                                                        employee.direction
+                                                            ? employee.direction
+                                                                  .id
+                                                            : "Aucune direction"
+                                                    }
+                                                    className="bg-gray-50 border w-full border-gray-300 text-gray-700 font-bold rounded-lg block p-2.5"
+                                                    required
+                                                    onChange={(e) => {
+                                                        changeDirection(
+                                                            employee.id,
+                                                            e.target.value
+                                                        );
+                                                    }}
+                                                >
+                                                    {directions.map(
+                                                        (direction) => (
+                                                            <option
+                                                                key={
+                                                                    direction.id
+                                                                }
+                                                                value={parseInt(
+                                                                    direction.id
+                                                                )}
+                                                            >
+                                                                {direction.nom}
+                                                            </option>
+                                                        )
+                                                    )}
+                                                </select>
                                             </td>
                                         </tr>
                                     ))}
