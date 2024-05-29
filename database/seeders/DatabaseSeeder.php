@@ -19,13 +19,11 @@ class DatabaseSeeder extends Seeder
     {
 
         $chef = User::factory()->create([
-            'nom' => 'Chef',
             'email' => 'chef@example.com',
             'status' => 'chef',
         ]);
         $direction = Direction::factory()->create(['chef_id' => $chef->id]);
         $employee = User::factory()->create([
-            'nom' => 'user',
             'email' => 'user@example.com',
             'status' => 'employee',
             'direction_id' => $direction->id,
@@ -44,8 +42,6 @@ class DatabaseSeeder extends Seeder
             'user_id' => $employee->id,
             'annee' => '2025',
         ]);
-        Absence::factory(4)->create([
-            'user_id' => $employee->id,
-        ]);
+        DemandeConge::factory(10)->create();
     }
 }

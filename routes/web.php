@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
+
+    return Inertia::render('Dashboard',);
 })->middleware('auth');
 
 Route::get('/about', function () {
@@ -41,6 +42,7 @@ Route::middleware('auth')->middleware('isChef')->group(function () {
 
     Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
     Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
+    Route::get('/absences/{employee}/rapport', [AbsenceController::class, 'rapport'])->name('absences.rapport');
 });
 
 require __DIR__ . '/auth.php';

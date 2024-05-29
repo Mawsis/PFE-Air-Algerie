@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chef;
 use App\Models\DemandeConge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -38,5 +39,18 @@ class DemandeCongeController extends Controller
         }
         DemandeConge::create($data);
         return Redirect::route('demande-conge');
+    }
+    public function indexChef()
+    {
+        //get all demandesConge from chef's employees
+        $chef = Chef::find(auth()->user()->id);
+        $demandes = collect(); // Initialize an empty collection
+        foreach ($chef->employees as $employee) {
+            $demandes = $demandes->merge($employee->demandesConge()->with('employee')->get());
+        }
+
+        return Inertia::render('DemandeCongeChef', [
+            'demandes' => $demandes,
+        ]);
     }
 }
