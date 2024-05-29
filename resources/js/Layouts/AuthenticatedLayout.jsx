@@ -9,6 +9,7 @@ export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     console.log(user.status);
+    user.status = "employee";
     return (
         <div className="min-h-screen bg-custom">
             <nav className="bg-white border-b border-gray-100">
