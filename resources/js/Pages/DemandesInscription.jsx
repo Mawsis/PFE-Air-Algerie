@@ -12,11 +12,11 @@ const DemandesInscription = ({ auth, demandes }) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Demande de conge
+                    Demandes d'inscription
                 </h2>
             }
         >
-            <Head title="Demande Conge" />
+            <Head title="Demande d'inscription" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex flex-col">

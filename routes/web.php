@@ -3,6 +3,7 @@
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\DemandeCongeController;
 use App\Http\Controllers\DemandeInscriptionController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,8 @@ Route::middleware('auth')->group(function () {
         Route::middleware('isAdmin')->group(function () {
             Route::get('/demandes_inscription', [DemandeInscriptionController::class, 'index'])->name('demandes-inscription');
             Route::patch('/demandes_inscription/{employee}/{status}', [DemandeInscriptionController::class, 'patch'])->name('demandes-inscription.patch');
+
+            Route::get('/employees', [EmployeeController::class, 'index'])->name('employees');
         });
     });
 });

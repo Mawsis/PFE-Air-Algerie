@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('absences', function (Blueprint $table) {
             $table->id();
             $table->boolean('valide')->default(false);
-
+            $table->enum("type", ["retard", "absence"]);
             $table->foreignId('user_id');
             $table->foreignId('horaire_id');
 

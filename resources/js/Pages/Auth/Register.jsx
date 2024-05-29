@@ -154,7 +154,6 @@ export default function Register({ directions }) {
                     </label>
 
                     <select
-                        id="countries"
                         class="bg-gray-50 border border-gray-300 text-gray-700 text-sm rounded-lg block w-full p-2.5"
                         required
                         onChange={(e) => {

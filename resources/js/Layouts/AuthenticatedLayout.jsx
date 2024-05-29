@@ -75,7 +75,14 @@ export default function Authenticated({ user, header, children }) {
                                         >
                                             Demandes d'inscription
                                         </NavLink>
-                                        <NavLink>Gerer les comptes</NavLink>
+                                        <NavLink
+                                            href={route("employees")}
+                                            active={route().current(
+                                                "employees"
+                                            )}
+                                        >
+                                            Gerer les comptes
+                                        </NavLink>
                                     </>
                                 )}
                             </div>

@@ -17,9 +17,11 @@ class AbsenceFactory extends Factory
      */
     public function definition(): array
     {
+        $types = ["absence", "retard"];
         return [
             "valide" => fake()->boolean,
             "user_id" => 3,
+            "type" => $types[array_rand($types)],
             "horaire_id" => Horaire::factory()->create()->id,
         ];
     }

@@ -21,7 +21,7 @@ const DemandesInscriptionEnvoye = ({ demandes }) => {
                     <th className="py-2">Nom</th>
                     <th className="py-2">Prenom</th>
                     <th className="py-2">Email</th>
-                    <th className="py-2">Telephone</th>
+                    <th className="py-2">Téléphone</th>
                     <th className="py-2">Direction</th>
                     <th className="py-2">Accepter</th>
                 </tr>
@@ -42,7 +42,7 @@ const DemandesInscriptionEnvoye = ({ demandes }) => {
                                 }
                                 className=" bg-green-500 text-white py-1 shadow rounded-md px-2"
                             >
-                                Employe
+                                Employé
                             </button>
                             <button
                                 onClick={() => accepter(employee.id, "chef")}

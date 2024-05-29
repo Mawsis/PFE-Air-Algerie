@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Absence;
 use App\Models\DemandeConge;
 use App\Models\Direction;
+use App\Models\Horaire;
 use App\Models\SoldeConge;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -23,32 +24,28 @@ class DatabaseSeeder extends Seeder
             'status' => 'chef',
         ]);
         //admin user 
-        User::factory()->create([
+        $admin = User::factory()->create([
             'email' => 'admin@example.com',
             'status' => 'admin',
         ]);
         $direction = Direction::factory()->create(['chef_id' => $chef->id]);
-        $directions = Direction::factory(5)->create();
         $employee = User::factory()->create([
             'email' => 'user@example.com',
             'status' => 'employee',
             'direction_id' => $direction->id,
         ]);
-        DemandeConge::factory(4)->create([
-            'date_debut' => '2024-05-28',
-            'date_fin' => '2024-05-28',
-            'status' => 'en attente',
-            'user_id' => $employee->id,
-        ]);
-        SoldeConge::factory()->create([
-            'user_id' => $employee->id,
-            'annee' => '2024',
-        ]);
-        SoldeConge::factory()->create([
-            'user_id' => $employee->id,
-            'annee' => '2025',
-        ]);
-        DemandeConge::factory(10)->create();
-        User::factory(10)->create(['direction_id' => $directions[rand(0, $directions->count() - 1)]]);
+
+
+        $directions = Direction::factory(5)->create();
+        $users = User::factory(10)->create(['direction_id' => $directions[rand(0, $directions->count() - 1)]]);
+        $horaires = Horaire::factory(100)->create(['user_id' => $users[rand(0, $users->count() - 1)]]);
+        for ($i = 0; $i < 20; $i++) {
+            $horaire = $horaires[rand(0, $horaires->count() - 1)];
+            Absence::factory()->create(["horaire_id" => $horaire->id, "user_id" => $horaire->user_id]);
+        }
+        foreach ($users as $user) {
+            SoldeConge::factory()->create(["user_id" => $user->id, "annee" => 2024]);
+        }
+        DemandeConge::factory(20)->create(["user_id" => $users[rand(0, $users->count() - 1)]]);
     }
 }

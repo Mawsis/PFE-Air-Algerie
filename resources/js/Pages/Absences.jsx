@@ -18,20 +18,20 @@ const Absences = ({ auth, direction, absences, employee }) => {
                 </h2>
             }
         >
-            <Head title="Demande Conge" />
+            <Head title="Absences" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex flex-col">
                         {!employee && (
                             <h2 className="text-lg font-medium">
-                                Absence des employes de la direction:{" "}
+                                Absence des employés de la direction:{" "}
                                 <b>{direction}</b>
                             </h2>
                         )}
                         {employee && (
                             <div className="flex justify-between items-center">
                                 <h3 className=" text-lg font-medium">
-                                    L'employe: {employee.nom + employee.prenom}
+                                    L'employé: {employee.nom + employee.prenom}
                                 </h3>
                                 <Link
                                     className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold border border-main hover:bg-white hover:text-main "
@@ -39,7 +39,7 @@ const Absences = ({ auth, direction, absences, employee }) => {
                                         employee: employee.id,
                                     })}
                                 >
-                                    Generer un rapport
+                                    Générer un rapport
                                 </Link>
                             </div>
                         )}
@@ -54,7 +54,10 @@ const Absences = ({ auth, direction, absences, employee }) => {
                                             Horaire
                                         </th>
                                         <th className="border px-4 py-2">
-                                            Excuser
+                                            Type
+                                        </th>
+                                        <th className="border px-4 py-2">
+                                            Justifié
                                         </th>
                                     </tr>
                                 </thead>
@@ -79,6 +82,11 @@ const Absences = ({ auth, direction, absences, employee }) => {
                                             <td className="border px-4 py-2">
                                                 {absence.horaire.heure_debut} -{" "}
                                                 {absence.horaire.heure_fin}
+                                            </td>
+                                            <td className="border px-4 py-2">
+                                                {absence.type === "absence"
+                                                    ? "Absence"
+                                                    : "Retard"}
                                             </td>
                                             <td className="border px-4 py-2">
                                                 <input
