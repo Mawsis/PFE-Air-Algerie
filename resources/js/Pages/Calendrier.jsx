@@ -11,17 +11,17 @@ const getCurrentDate = () => {
     return `${year}-${month}-${day}`;
 };
 
-export default function Dashboard({ auth }) {
+export default function Calendrier({ auth }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Dashboard
+                    Calendrier
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title="Calendrier" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

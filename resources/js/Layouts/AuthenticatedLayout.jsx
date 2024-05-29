@@ -26,10 +26,8 @@ export default function Authenticated({ user, header, children }) {
                                 {user.status === "employee" && (
                                     <>
                                         <NavLink
-                                            href={route("dashboard")}
-                                            active={route().current(
-                                                "dashboard"
-                                            )}
+                                            href={route("/")}
+                                            active={route().current("/")}
                                         >
                                             Calendrier
                                         </NavLink>
@@ -168,10 +166,10 @@ export default function Authenticated({ user, header, children }) {
                 >
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            href={route("dashboard")}
-                            active={route().current("dashboard")}
+                            href={route("/")}
+                            active={route().current("/")}
                         >
-                            Dashboard
+                            Calendrier
                         </ResponsiveNavLink>
                     </div>
 

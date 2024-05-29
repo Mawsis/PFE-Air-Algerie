@@ -8,9 +8,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-
-    return Inertia::render('Dashboard',);
-})->middleware('auth');
+    return Inertia::render('Calendrier',);
+})->middleware('auth')->name('/');
 
 Route::get('/about', function () {
     return Inertia::render('AttenteAdmin');
@@ -19,10 +18,6 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->middleware('auth');
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
