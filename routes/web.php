@@ -2,15 +2,15 @@
 
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\DemandeCongeController;
+use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-
-    return Inertia::render('Dashboard',);
-})->middleware('auth');
+    return Inertia::render('Calendrier',);
+})->middleware('auth')->name('/');
 
 Route::get('/about', function () {
     return Inertia::render('AttenteAdmin');
@@ -19,10 +19,6 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return Inertia::render('Contact');
 })->middleware('auth');
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,6 +39,10 @@ Route::middleware('auth')->middleware('isChef')->group(function () {
     Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
     Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
     Route::get('/absences/{employee}/rapport', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+});
+
+Route::middleware('auth')->middleware('isAdmin')->group(function () {
+    Route::get('/demande_inscription', [DemandeInscriptionController::class, 'index'])->name('demande-inscription');
 });
 
 require __DIR__ . '/auth.php';

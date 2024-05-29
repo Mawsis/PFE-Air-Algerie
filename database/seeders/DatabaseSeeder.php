@@ -22,6 +22,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'chef@example.com',
             'status' => 'chef',
         ]);
+        //admin user 
+        User::factory()->create([
+            'email' => 'admin@example.com',
+            'status' => 'admin',
+        ]);
         $direction = Direction::factory()->create(['chef_id' => $chef->id]);
         $employee = User::factory()->create([
             'email' => 'user@example.com',

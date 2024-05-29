@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->time('heure_debut');
             $table->time('heure_fin');
+            $table->boolean('present')->default(false);
 
             $table->foreignId('user_id');
             $table->foreignId('absence_id')->nullable();

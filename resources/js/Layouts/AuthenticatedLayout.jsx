@@ -9,9 +9,8 @@ export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     console.log(user.status);
-    user.status = "employee";
     return (
-        <div className="min-h-screen bg-white">
+        <div className="min-h-screen bg-custom">
             <nav className="bg-white border-b border-gray-100">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
@@ -26,10 +25,8 @@ export default function Authenticated({ user, header, children }) {
                                 {user.status === "employee" && (
                                     <>
                                         <NavLink
-                                            href={route("dashboard")}
-                                            active={route().current(
-                                                "dashboard"
-                                            )}
+                                            href={route("/")}
+                                            active={route().current("/")}
                                         >
                                             Calendrier
                                         </NavLink>
@@ -63,7 +60,12 @@ export default function Authenticated({ user, header, children }) {
                                 )}
                                 {user.status === "admin" && (
                                     <>
-                                        <NavLink>
+                                        <NavLink
+                                            href={route("demande-inscription")}
+                                            active={route().current(
+                                                "demande-inscription"
+                                            )}
+                                        >
                                             Demandes d'inscription
                                         </NavLink>
                                         <NavLink>Gerer les comptes</NavLink>
@@ -168,10 +170,10 @@ export default function Authenticated({ user, header, children }) {
                 >
                     <div className="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink
-                            href={route("dashboard")}
-                            active={route().current("dashboard")}
+                            href={route("/")}
+                            active={route().current("/")}
                         >
-                            Dashboard
+                            Calendrier
                         </ResponsiveNavLink>
                     </div>
 
