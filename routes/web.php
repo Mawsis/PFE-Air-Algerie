@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\DemandeCongeController;
+use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,10 @@ Route::middleware('auth')->middleware('isChef')->group(function () {
     Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
     Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
     Route::get('/absences/{employee}/rapport', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+});
+
+Route::middleware('auth')->middleware('isAdmin')->group(function () {
+    Route::get('/demande_inscription', [DemandeInscriptionController::class, 'index'])->name('demande-inscription');
 });
 
 require __DIR__ . '/auth.php';
