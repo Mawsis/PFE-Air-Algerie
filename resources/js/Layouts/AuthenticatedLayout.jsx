@@ -47,7 +47,15 @@ export default function Authenticated({ user, header, children }) {
                                     <>
                                         <NavLink>Gerer Les Horaires</NavLink>
                                         <NavLink>Les Demandes de Conge</NavLink>
-                                        <NavLink>
+                                        <NavLink
+                                            href={route("absences")}
+                                            active={
+                                                route().current("absences") ||
+                                                route().current(
+                                                    "absences.employee"
+                                                )
+                                            }
+                                        >
                                             Consulter les absences
                                         </NavLink>
                                     </>
