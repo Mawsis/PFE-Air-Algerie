@@ -6,6 +6,7 @@ use App\Models\Chef;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class AbsenceController extends Controller
 {
@@ -46,5 +47,12 @@ class AbsenceController extends Controller
             'absences' => $absences,
             'employee' => $employee,
         ]);
+    }
+
+    public function pdf()
+    {
+        return Pdf::view('pdf', [
+            "absences" => User::find(16)->absences()->with('employee')->with('horaire')->get(),
+        ])->format('a4')->name('invoice.pdf');
     }
 }

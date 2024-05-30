@@ -11,6 +11,7 @@ use Inertia\Inertia;
 
 
 
+Route::get("/pdf", [AbsenceController::class, 'pdf'])->name('pdf');
 
 Route::middleware('auth')->group(function () {
     Route::get('/wait', function () {
