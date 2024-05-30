@@ -1,7 +1,9 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import illustration from "@/Assets/illsutration.jpg";
-
+import { formatTime } from "@/Utils/time";
+import useTime from "@/Hooks/useTime";
+import Calendar from "@/Components/Calendar";
 const getCurrentDate = () => {
     const date = new Date();
     const year = date.getFullYear();
@@ -12,6 +14,7 @@ const getCurrentDate = () => {
 };
 
 export default function Calendrier({ auth }) {
+    const currentTime = useTime();
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -22,7 +25,6 @@ export default function Calendrier({ auth }) {
             }
         >
             <Head title="Calendrier" />
-
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -32,12 +34,15 @@ export default function Calendrier({ auth }) {
                                 <span className="text-main">
                                     {getCurrentDate()}
                                 </span>{" "}
-                                a <span className="text-main">8:04</span>
+                                a{" "}
+                                <span className="text-main">
+                                    {formatTime(currentTime)}
+                                </span>
                             </h2>
                         </div>
                     </div>
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-6">
-                        <div className="h-1/2 p-3 space-y-3">
+                        <div className="p-3 space-y-3">
                             <h2 className="text-3xl">
                                 Bienvenu {auth.user.nom}!
                             </h2>
@@ -56,6 +61,7 @@ export default function Calendrier({ auth }) {
                                     Se Pointer
                                 </button>
                             </div>
+                            <Calendar />
                         </div>
                     </div>
                 </div>
