@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absence;
 use App\Models\Chef;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -47,6 +48,12 @@ class AbsenceController extends Controller
             'absences' => $absences,
             'employee' => $employee,
         ]);
+    }
+    public function patch(Absence $absence)
+    {
+        $absence->valide = !$absence->valide;
+        $absence->save();
+        return redirect()->back();
     }
 
     public function pdf()
