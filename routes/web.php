@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/', function () {
             return Inertia::render('Calendrier',);
         })->name('/');
+
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -36,6 +37,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
             Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
             Route::get('/absences/{employee}/rapport', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+            Route::patch('/absences/{absence}', [AbsenceController::class, 'patch'])->name('absences.patch');
 
             Route::get('/horaires', [HoraireController::class, 'index'])->name('horaires');
         });
