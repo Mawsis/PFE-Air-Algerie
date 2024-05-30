@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absence;
 use App\Models\Chef;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\LaravelPdf\Facades\Pdf;
 
 class AbsenceController extends Controller
 {
@@ -13,7 +15,7 @@ class AbsenceController extends Controller
     {
         $absences = collect(); // Initialize an empty collection
         if (auth()->user()->status === 'chef') {
-            $direction =  auth()->user()->directionManage;
+            $direction =  auth()->user()->directionManage->nom;
             $chef = Chef::find(auth()->user()->id);
             foreach ($chef->employees as $employee) {
                 $absences = $absences->merge($employee->absences()->with('employee')->with('horaire')->get());
@@ -46,5 +48,18 @@ class AbsenceController extends Controller
             'absences' => $absences,
             'employee' => $employee,
         ]);
+    }
+    public function patch(Absence $absence)
+    {
+        $absence->valide = !$absence->valide;
+        $absence->save();
+        return redirect()->back();
+    }
+
+    public function pdf()
+    {
+        return Pdf::view('pdf', [
+            "absences" => User::find(16)->absences()->with('employee')->with('horaire')->get(),
+        ])->format('a4')->name('invoice.pdf');
     }
 }

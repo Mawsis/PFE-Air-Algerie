@@ -1,6 +1,6 @@
 import React from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import { PlusCircle } from "lucide-react";
@@ -8,7 +8,9 @@ import InputError from "@/Components/InputError";
 
 const Absences = ({ auth, direction, absences, employee }) => {
     console.log(absences);
-    const excuse = (e) => {};
+    const excuse = (id) => {
+        router.patch(route("absences.patch", { absence: id }));
+    };
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -90,9 +92,14 @@ const Absences = ({ auth, direction, absences, employee }) => {
                                             </td>
                                             <td className="border px-4 py-2">
                                                 <input
-                                                    onChange={excuse}
+                                                    onChange={(e) => {
+                                                        excuse(absence.id);
+                                                    }}
                                                     type="checkbox"
-                                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                                    defaultChecked={
+                                                        absence.valide
+                                                    }
+                                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                                 />
                                             </td>
                                         </tr>
