@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
 
 
         $directions = Direction::factory(5)->create();
-        $users = User::factory(10)->create(['direction_id' => $directions[rand(0, $directions->count() - 1)]]);
+        $users = User::factory(10)->create(['direction_id' => $direction->id, "status" => "employee"]);
         $horaires = Horaire::factory(100)->create(['user_id' => $users[rand(0, $users->count() - 1)]]);
         for ($i = 0; $i < 20; $i++) {
             $horaire = $horaires[rand(0, $horaires->count() - 1)];

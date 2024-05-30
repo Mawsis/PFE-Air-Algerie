@@ -4,6 +4,7 @@ use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\DemandeCongeController;
 use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HoraireController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,8 @@ Route::middleware('auth')->group(function () {
             Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
             Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
             Route::get('/absences/{employee}/rapport', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+
+            Route::get('/horaires', [HoraireController::class, 'index'])->name('horaires');
         });
         Route::middleware('isAdmin')->group(function () {
             Route::get('/demandes_inscription', [DemandeInscriptionController::class, 'index'])->name('demandes-inscription');

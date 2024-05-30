@@ -20,6 +20,6 @@ class IsAdmin
             return $next($request);
         }
 
-        return redirect('/profile');
+        return redirect('/404');
     }
 }

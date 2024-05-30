@@ -42,7 +42,12 @@ export default function Authenticated({ user, header, children }) {
                                 {(user.status === "chef" ||
                                     user.status === "admin") && (
                                     <>
-                                        <NavLink>Gerer Les Horaires</NavLink>
+                                        <NavLink
+                                            href={route("horaires")}
+                                            active={route().current("horaires")}
+                                        >
+                                            Gerer Les Horaires
+                                        </NavLink>
                                         <NavLink
                                             href={route("demande-conge-chef")}
                                             active={route().current(
