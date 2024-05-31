@@ -18,16 +18,27 @@ const DemandeCongeEnvoye = ({ demandes }) => {
         <table className="w-full text-center">
             <thead>
                 <tr>
-                    <th className="py-2">Date d'envoi</th>
-                    <th className="py-2">Date début</th>
-                    <th className="py-2">Date fin</th>
-                    <th className="py-2">Status</th>
+                    <th className="py-2 text-sm sm:text-base lg:text-lg">
+                        Date d'envoi
+                    </th>
+                    <th className="py-2 text-sm sm:text-base lg:text-lg">
+                        Date début
+                    </th>
+                    <th className="py-2 text-sm sm:text-base lg:text-lg">
+                        Date fin
+                    </th>
+                    <th className="py-2 text-sm sm:text-base lg:text-lg">
+                        Status
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 {/* Map over the demandes de conges and render a table row for each demande */}
                 {demandes.map((demande) => (
-                    <tr key={demande.id} className="border-t text-lg">
+                    <tr
+                        key={demande.id}
+                        className="border-t text-sm sm:text-base md:text-lg"
+                    >
                         <td className="py-2">
                             {demande.created_at.split("T")[0]}
                         </td>

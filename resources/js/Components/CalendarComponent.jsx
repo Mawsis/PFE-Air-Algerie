@@ -48,7 +48,8 @@ export default function CalendarComponent({
             }
         }
     }
-    if (!workingDays || !employeeId) return <div>Pas de calendrier</div>;
+    if (!workingDays || !employeeId)
+        return <div className="text-sm md:text-base">Pas de calendrier</div>;
     return (
         <div className={cn("p-5 shadow-2xl rounded-md", className)}>
             <div className="w-full flex justify-between mb-2">

@@ -10,18 +10,18 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Demande de conge
+                <h2 className="font-semibold text-base md:text-xl text-gray-800 leading-tight">
+                    Demande de congé
                 </h2>
             }
         >
             <Head title="Demande Conge" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex flex-col">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 md:p-6 gap-3 flex flex-col">
                         <div className="flex flex-col gap-3">
-                            <h2 className="font-semibold text-lg text-gray-700">
-                                Solde de conge:
+                            <h2 className="font-semibold text-base md:text-lg text-gray-700">
+                                Solde de congé:
                             </h2>
                             <div className="flex flex-col gap-1 px-5">
                                 {soldes.map((solde) => (
@@ -40,17 +40,17 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
                             </div>
                         </div>
                         <div className="text-gray-700 flex justify-between items-center">
-                            <h2 className=" font-semibold text-lg">
-                                Les demandes de conges envoyees:
+                            <h2 className=" font-semibold text-sm sm:text-base md:text-lg w-32 sm:w-full">
+                                Les demandes de conges envoyées:
                             </h2>
                             <Link
                                 href={route("demander-conge.create")}
-                                className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold text-lg border border-main hover:bg-white hover:text-main "
+                                className="bg-main flex justify-center items-center gap-2 px-1 md:px-3 py-2 rounded-md text-white font-semibold sm:text-base md:text-lg border border-main hover:bg-white hover:text-main h-8 text-xs sm:h-full sm:w-72 md:w-80 lg:w-96"
                             >
                                 <PlusCircle /> Demander un conge
                             </Link>
                         </div>
-                        <div className="px-4">
+                        <div className="px-0 md:px-4">
                             <DemandeCongeEnvoye demandes={demandes} />
                         </div>
                     </div>
