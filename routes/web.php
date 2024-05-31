@@ -4,6 +4,7 @@ use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\DemandeCongeController;
 use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HoraireController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -19,9 +20,7 @@ Route::middleware('auth')->group(function () {
         return Inertia::render('AttenteAdmin');
     })->name('wait');
     Route::middleware('isEmployee')->group(function () {
-        Route::get('/', function () {
-            return Inertia::render('Calendrier',);
-        })->name('/');
+        Route::get('/', [HomeController::class, "index"])->name('/');
 
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -40,6 +39,9 @@ Route::middleware('auth')->group(function () {
             Route::patch('/absences/{absence}', [AbsenceController::class, 'patch'])->name('absences.patch');
 
             Route::get('/horaires', [HoraireController::class, 'index'])->name('horaires');
+            Route::delete('/horaires/{horaireId}', [HoraireController::class, 'delete'])->name('horaires.delete');
+            Route::patch('/horaires/{horaireId}', [HoraireController::class, 'update'])->name('horaires.update');
+            Route::post('/horaires', [HoraireController::class, 'store'])->name('horaires.store');
         });
         Route::middleware('isAdmin')->group(function () {
             Route::get('/demandes_inscription', [DemandeInscriptionController::class, 'index'])->name('demandes-inscription');

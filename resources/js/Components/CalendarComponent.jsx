@@ -15,16 +15,20 @@ function getCurrentDate(optionalDate = undefined) {
 
 export default function CalendarComponent({
     className,
-    setWorkingDays,
     workingDays,
     year,
     month,
     employeeId,
+    routeName,
+    handleDayClicked,
 }) {
     const days = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
     const [daysShift, setDaysShift] = useState(getDayNumber(month, year));
     function verifyWorkingDate(day) {
-        if (day === new Date().getDate() - 1) {
+        if (
+            day === new Date().getDate() - 1 &&
+            parseInt(month) === new Date().getMonth() + 1
+        ) {
             return 4;
         } else if (day > new Date().getDate() - 1) {
             return 5;
@@ -61,21 +65,33 @@ export default function CalendarComponent({
                             onClick={() => {
                                 if (parseInt(month) === 1) {
                                     router.get(
-                                        route("horaires", {
-                                            input: "",
-                                            employee: employeeId,
-                                            year: parseInt(year) - 1,
-                                            month: 12,
-                                        })
+                                        route(
+                                            routeName,
+                                            {
+                                                input: "",
+                                                employee: employeeId,
+                                                year: parseInt(year) - 1,
+                                                month: 12,
+                                            },
+                                            {
+                                                preserveScroll: true,
+                                            }
+                                        )
                                     );
                                 } else {
                                     router.get(
-                                        route("horaires", {
-                                            input: "",
-                                            employee: employeeId,
-                                            year: parseInt(year),
-                                            month: parseInt(month) - 1,
-                                        })
+                                        route(
+                                            routeName,
+                                            {
+                                                input: "",
+                                                employee: employeeId,
+                                                year: parseInt(year),
+                                                month: parseInt(month) - 1,
+                                            },
+                                            {
+                                                preserveScroll: true,
+                                            }
+                                        )
                                     );
                                 }
                             }}
@@ -86,21 +102,33 @@ export default function CalendarComponent({
                             onClick={() => {
                                 if (parseInt(month) === 12) {
                                     router.get(
-                                        route("horaires", {
-                                            input: "",
-                                            employee: employeeId,
-                                            year: parseInt(year) + 1,
-                                            month: 1,
-                                        })
+                                        route(
+                                            routeName,
+                                            {
+                                                input: "",
+                                                employee: employeeId,
+                                                year: parseInt(year) + 1,
+                                                month: 1,
+                                            },
+                                            {
+                                                preserveScroll: true,
+                                            }
+                                        )
                                     );
                                 } else {
                                     router.get(
-                                        route("horaires", {
-                                            input: "",
-                                            employee: employeeId,
-                                            year: parseInt(year),
-                                            month: parseInt(month) + 1,
-                                        })
+                                        route(
+                                            routeName,
+                                            {
+                                                input: "",
+                                                employee: employeeId,
+                                                year: parseInt(year),
+                                                month: parseInt(month) + 1,
+                                            },
+                                            {
+                                                preserveScroll: true,
+                                            }
+                                        )
                                     );
                                 }
                             }}
@@ -133,7 +161,21 @@ export default function CalendarComponent({
                         return (
                             <div
                                 key={index}
-                                className={`w-full h-10 ${bgColor} rounded-xs text-white text-xs border border-gray-200 flex justify-center items-center`}
+                                onClick={() => {
+                                    let a = index + 1;
+                                    workingDays.map((day) => {
+                                        if (
+                                            new Date(
+                                                day.heure_debut
+                                            ).getDate() ===
+                                            index + 1
+                                        ) {
+                                            a = day;
+                                        }
+                                    });
+                                    handleDayClicked(a);
+                                }}
+                                className={`w-full h-10 ${bgColor} rounded-xs hover:text-base hover:font-semibold text-white text-xs border border-gray-200 flex justify-center items-center`}
                                 style={{
                                     gridColumnStart:
                                         index === 0 ? daysShift : 0,

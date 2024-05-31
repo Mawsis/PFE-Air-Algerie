@@ -59,7 +59,8 @@ class AbsenceController extends Controller
     public function pdf()
     {
         return Pdf::view('pdf', [
-            "absences" => User::find(16)->absences()->with('employee')->with('horaire')->get(),
+            "absences" => User::find(15)->absences()->with('employee')->with('horaire')->get(),
+            "employee" => User::find(15),
         ])->format('a4')->name('invoice.pdf');
     }
 }

@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@example.com',
             'status' => 'admin',
         ]);
+        Horaire::factory(400)->create(['user_id' => $admin->id]);
         $direction = Direction::factory()->create(['chef_id' => $chef->id]);
         $employee = User::factory()->create([
             'email' => 'user@example.com',
