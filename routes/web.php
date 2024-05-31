@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
             Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
-            Route::get('/absences/{employee}/rapport', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+            Route::get('/absences/{employee}/{format}/{date}', [AbsenceController::class, 'rapport'])->name('absences.rapport');
             Route::patch('/absences/{absence}', [AbsenceController::class, 'patch'])->name('absences.patch');
 
             Route::get('/horaires', [HoraireController::class, 'index'])->name('horaires');
