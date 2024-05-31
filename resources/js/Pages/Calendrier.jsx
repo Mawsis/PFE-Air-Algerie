@@ -70,7 +70,7 @@ export default function Calendrier({ auth, horaires, year, month }) {
                             <div className="w-full flex justify-center items-center">
                                 <CalendarComponent
                                     workingDays={horaires}
-                                    className="w-1/2 h-3/4"
+                                    className="w-[95%] sm:w-1/2 h-3/4"
                                     year={year}
                                     month={month}
                                     employeeId={auth.user.id}
