@@ -88,7 +88,7 @@ export default function Register({ directions }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="email" value="Email" />
+                    <InputLabel htmlFor="email" value="Adresse e-mail" />
 
                     <TextInput
                         id="email"
@@ -105,7 +105,7 @@ export default function Register({ directions }) {
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value="Mot de passe" />
 
                     <TextInput
                         id="password"
@@ -124,7 +124,7 @@ export default function Register({ directions }) {
                 <div className="mt-4">
                     <InputLabel
                         htmlFor="password_confirmation"
-                        value="Confirm Password"
+                        value="Confirmer mot de passe"
                     />
 
                     <TextInput
@@ -172,11 +172,11 @@ export default function Register({ directions }) {
                         href={route("login")}
                         className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
-                        Already registered?
+                        J'ai deja un compte
                     </Link>
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
+                        S'inscrire
                     </PrimaryButton>
                 </div>
             </form>

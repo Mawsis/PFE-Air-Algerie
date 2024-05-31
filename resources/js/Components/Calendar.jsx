@@ -8,12 +8,12 @@ export default function CalendarWrapper() {
     const user = usePage().props.auth.user;
     return (
         <div className="flex flex-col gap-8">
-            <div className="text-3xl">
+            <div className="text-xl md:text-3xl">
                 <p>Voici votre calendrier :</p>
             </div>
             <div className="flex items-center justify-center">
                 <CalendarComponent
-                    className=" w-1/3 "
+                    className=" w-1/3"
                     workingDays={horaires}
                     setWorkingDays={setWorkingDays}
                     employeeId={user.id}
