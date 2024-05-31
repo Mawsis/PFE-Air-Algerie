@@ -35,7 +35,7 @@ const Absences = ({ auth, direction, absences, employee }) => {
                                 <h3 className=" text-lg font-medium">
                                     L'employé: {employee.nom + employee.prenom}
                                 </h3>
-                                <PopoverWrapper>
+                                <PopoverWrapper employee={employee}>
                                     <input
                                         type="button"
                                         className="bg-main cursor-pointer flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold border border-main hover:bg-white hover:text-main "
