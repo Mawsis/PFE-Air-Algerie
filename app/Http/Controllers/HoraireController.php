@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Horaire;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -26,12 +27,12 @@ class HoraireController extends Controller
         }
         if ($employeeId)
             $horaires = User::find($employeeId)->horaires()
-            ->whereYear('heure_debut', $year)
-            ->whereMonth('heure_debut', $month)
-            ->whereYear('heure_fin', $year)
-            ->whereMonth('heure_fin', $month)
-            ->with('absence')
-            ->get();
+                ->whereYear('heure_debut', $year)
+                ->whereMonth('heure_debut', $month)
+                ->whereYear('heure_fin', $year)
+                ->whereMonth('heure_fin', $month)
+                ->with('absence')
+                ->get();
         return Inertia::render('GererHoraires', [
             'employees' => $employees ?? null,
             'search' => request('input') ?? '',
@@ -40,5 +41,22 @@ class HoraireController extends Controller
             "year" => $year,
             "month" => $month,
         ]);
+    }
+    public function delete($horaireId)
+    {
+        $horaire = Horaire::find($horaireId);
+        $horaire->delete();
+        return redirect()->back();
+    }
+    public function update($horaireId)
+    {
+        $horaire = Horaire::find($horaireId);
+        $horaire->update(request()->all());
+        return redirect()->back();
+    }
+    public function store()
+    {
+        Horaire::create(request()->all());
+        return redirect()->back();
     }
 }

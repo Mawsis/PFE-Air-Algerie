@@ -4,6 +4,8 @@ import illustration from "@/Assets/illsutration.jpg";
 import { formatTime } from "@/Utils/time";
 import useTime from "@/Hooks/useTime";
 import Calendar from "@/Components/Calendar";
+import CalendarComponent from "@/Components/CalendarComponent";
+import { useState } from "react";
 const getCurrentDate = () => {
     const date = new Date();
     const year = date.getFullYear();
@@ -13,8 +15,10 @@ const getCurrentDate = () => {
     return `${year}-${month}-${day}`;
 };
 
-export default function Calendrier({ auth }) {
+export default function Calendrier({ auth, horaires, year, month }) {
     const currentTime = useTime();
+    const [horaire, setHoraire] = useState(null);
+    console.log(horaire);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -63,9 +67,32 @@ export default function Calendrier({ auth }) {
                                     Se Pointer
                                 </button>
                             </div>
-                            <div className="p-3">
-                                <Calendar />
+                            <div className="w-full flex justify-center items-center">
+                                <CalendarComponent
+                                    workingDays={horaires}
+                                    className="w-1/2 h-3/4"
+                                    year={year}
+                                    month={month}
+                                    employeeId={auth.user.id}
+                                    routeName="/"
+                                    handleDayClicked={setHoraire}
+                                />
                             </div>
+                            {horaire && (
+                                <div>
+                                    {typeof horaire === "number" ? (
+                                        <p>
+                                            Vous navez pas de seance se jours si
+                                        </p>
+                                    ) : (
+                                        <p>
+                                            Vous avex une session de{" "}
+                                            {horaire.heure_debut.split(" ")[1]}{" "}
+                                            a {horaire.heure_fin.split(" ")[1]}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -41,8 +41,8 @@
     </div>
     <div class="w-full">
         <h1 class=" font-semibold text-xl">Employé:</h1>
-        <div class=" ml-5 text-black text-opacity-80">
-            <p>Nom:</p>
+        <div class=" ml-5 text-black` text-opacity-80">
+            <p>Nom:{{ $employee->nom }}</p>
             <p>Prenom:</p>
             <p>Email:</p>
             <p>Téléphone:</p>
