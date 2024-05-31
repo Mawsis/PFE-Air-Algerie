@@ -14,6 +14,7 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
             status: "en attente",
             user_id: user.id,
         });
+    console.log(errors);
     const submit = (e) => {
         e.preventDefault();
 
@@ -58,6 +59,14 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
                                     <InputError
                                         className="mt-2"
                                         message={errors.date_debut}
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.status}
+                                    />
+                                    <InputError
+                                        className="mt-2"
+                                        message={errors.user_id}
                                     />
                                 </div>
                                 <div>
