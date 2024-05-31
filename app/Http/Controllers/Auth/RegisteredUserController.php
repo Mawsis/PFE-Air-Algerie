@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Direction;
+use App\Models\SoldeConge;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -64,7 +65,12 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'direction_id' => $request->direction_id,
         ]);
-
+        SoldeConge::create([
+            'user_id' => $user->id,
+            'jours_total' => 30,
+            'jours_consommes' => 0,
+            'annee' => date('Y'),
+        ]);
         event(new Registered($user));
 
         Auth::login($user);

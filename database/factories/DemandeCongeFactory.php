@@ -19,8 +19,8 @@ class DemandeCongeFactory extends Factory
     {
         $arrayValues = ['en attente', 'approuvée', 'refuse'];
         return [
-            'date_debut' => fake()->date(),
-            'date_fin' => fake()->date(),
+            'date_debut' => $this->faker->dateTimeBetween('last month', 'next month')->format('Y-m-d'),
+            'date_fin' => $this->faker->dateTimeBetween('last month', 'next month')->format('Y-m-d'),
             'status' => $arrayValues[array_rand($arrayValues)],
             'user_id' => User::factory()->create(["direction_id" => 1])->id,
         ];
