@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chef;
 use App\Models\DemandeConge;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
@@ -31,11 +32,16 @@ class DemandeCongeController extends Controller
             'status' => 'required',
             'user_id' => 'required|exists:users,id',
         ]);
-
-        $currentYear = date('Y');
-        $soldeConge = auth()->user()->soldesConge()->whereYear('annee', $currentYear)->first();
-
-        if ($soldeConge && $soldeConge->jours_total > $soldeConge->jours_consommes) {
+        $soldeConge = auth()->user()->soldesConge()->where('annee', date('Y'))->first();
+        error_log(
+            (int)(Carbon::parse($data["date_debut"])->diffInDays(Carbon::parse($data["date_fin"]))) > $soldeConge->restant() ? "yolo" : "hola"
+        );
+        if (Carbon::parse($data["date_debut"])->diffInDays(Carbon::parse($data["date_fin"])) > $soldeConge->restant()) {
+            return redirect()->back()->withErrors(['date_debut' => "Pas assez de solde de conge"]);
+        }
+        if (
+            $soldeConge && $soldeConge->jours_total <= $soldeConge->jours_consommes
+        ) {
             return redirect()->back()->withErrors(['error' => 'Insufficient leave balance.']);
         }
         DemandeConge::create($data);
@@ -63,6 +69,17 @@ class DemandeCongeController extends Controller
     public function patch(DemandeConge $demande, string $status)
     {
         $demande->status = $status;
+        if ($status === 'approuvée') {
+            $solde = $demande->employee->soldesConge()->where('annee', date('Y'))->first();
+            $solde->update([
+                'jours_consommes' => $solde->jours_consommes + Carbon::parse($demande->date_debut)->diffInDays(Carbon::parse($demande->date_fin))
+            ]);
+        } elseif ($status == "refuse") {
+            $solde = $demande->employee->soldesConge()->where('annee', date('Y'))->first();
+            $solde->update([
+                'jours_consommes' => $solde->jours_consommes - Carbon::parse($demande->date_debut)->diffInDays(Carbon::parse($demande->date_fin))
+            ]);
+        }
         $demande->save();
 
         return redirect()->route('demande-conge-chef');
