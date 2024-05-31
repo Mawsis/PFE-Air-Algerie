@@ -38,7 +38,7 @@ const Absences = ({ auth, direction, absences, employee }) => {
                                 <PopoverWrapper>
                                     <input
                                         type="button"
-                                        className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold border border-main hover:bg-white hover:text-main "
+                                        className="bg-main cursor-pointer flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold border border-main hover:bg-white hover:text-main "
                                         value="Générer un rapport"
                                     />
                                 </PopoverWrapper>
