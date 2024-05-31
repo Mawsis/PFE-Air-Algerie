@@ -18,11 +18,11 @@ const GererHoraires = ({
     month,
 }) => {
     const newTime = (datee, newTimeString) => {
-        if (datee === undefined)
+        if (!datee)
             datee =
                 year +
                 "-" +
-                (parseInt(month) - 1) +
+                parseInt(month) +
                 "-" +
                 currentDay +
                 " " +

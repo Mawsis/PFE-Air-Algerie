@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Horaire;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -56,7 +57,11 @@ class HoraireController extends Controller
     }
     public function store()
     {
-        Horaire::create(request()->all());
+        Horaire::create([
+            'user_id' => request('user_id'),
+            'heure_debut' => Carbon::parse(request('heure_debut')),
+            'heure_fin' => Carbon::parse(request('heure_fin')),
+        ]);
         return redirect()->back();
     }
 }
