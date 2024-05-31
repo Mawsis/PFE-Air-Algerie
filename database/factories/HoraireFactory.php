@@ -17,8 +17,9 @@ class HoraireFactory extends Factory
     public function definition(): array
     {
         return [
-            "heure_debut" => fake()->dateTimeBetween('-1 month', '+1 month'),
-            "heure_fin" => fake()->dateTimeBetween('-1 month', '+1 month'),
+            "heure_debut" => fake()->dateTimeBetween('-4 month', '+4 month'),
+            "heure_fin" => fake()->dateTimeBetween('-4 month', '+4 month'),
+            "present" => fake()->boolean(),
             "user_id" => 3,
         ];
     }

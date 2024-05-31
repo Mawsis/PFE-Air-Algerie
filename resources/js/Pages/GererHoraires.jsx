@@ -1,4 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import CalendarComponent from "@/Components/CalendarComponent";
 import { Head, router } from "@inertiajs/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
@@ -7,7 +8,15 @@ import InputError from "@/Components/InputError";
 import TextInput from "@/Components/TextInput";
 import { useState } from "react";
 
-const GererHoraires = ({ auth, employees, search, employee, horaires }) => {
+const GererHoraires = ({
+    auth,
+    employees,
+    search,
+    employee,
+    horaires,
+    year,
+    month,
+}) => {
     const [input, setInput] = useState(search);
     console.log(horaires);
     return (
@@ -131,15 +140,14 @@ const GererHoraires = ({ auth, employees, search, employee, horaires }) => {
                             </div>
                         </div>
                         <div className="w-full flex justify-end">
-                            <div className=" h-[500px]">
-                                {horaires &&
-                                    horaires.map((horaire) => {
-                                        return (
-                                            <p key={horaire.id}>
-                                                {horaire.heure_debut}
-                                            </p>
-                                        );
-                                    })}
+                            <div className=" h-[500px] flex justify-center items-center w-full">
+                                <CalendarComponent
+                                    workingDays={horaires}
+                                    className="w-2/3 h-2/3"
+                                    year={year}
+                                    month={month}
+                                    employeeId={employee ? employee.id : ""}
+                                />
                             </div>
                         </div>
                     </div>
