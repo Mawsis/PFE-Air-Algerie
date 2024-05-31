@@ -5,7 +5,7 @@ import { Link, useForm, usePage } from "@inertiajs/react";
 import InputLabel from "@/Components/InputLabel";
 import { PlusCircle } from "lucide-react";
 import InputError from "@/Components/InputError";
-
+import PopoverWrapper from "@/Components/PopoverWrapper";
 const Absences = ({ auth, direction, absences, employee }) => {
     console.log(absences);
     const excuse = (id) => {
@@ -35,14 +35,13 @@ const Absences = ({ auth, direction, absences, employee }) => {
                                 <h3 className=" text-lg font-medium">
                                     L'employé: {employee.nom + employee.prenom}
                                 </h3>
-                                <Link
-                                    className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold border border-main hover:bg-white hover:text-main "
-                                    href={route("absences.rapport", {
-                                        employee: employee.id,
-                                    })}
-                                >
-                                    Générer un rapport
-                                </Link>
+                                <PopoverWrapper>
+                                    <input
+                                        type="button"
+                                        className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold border border-main hover:bg-white hover:text-main "
+                                        value="Générer un rapport"
+                                    />
+                                </PopoverWrapper>
                             </div>
                         )}
                         <div className="mt-6">
