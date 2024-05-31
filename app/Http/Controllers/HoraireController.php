@@ -15,7 +15,7 @@ class HoraireController extends Controller
                 ->orWhere('prenom', 'like', '%' . request('input') . '%')
                 ->get();
 
-        $employeeId = (int)request('employee');
+        $employeeId = (int)request('employee') ?? null;
 
         if (request('year') && request('month')) {
             $year = request('year');
@@ -24,20 +24,21 @@ class HoraireController extends Controller
             $year = date('Y');
             $month = date('m');
         }
-
-        $horaires = User::find($employeeId)->horaires()
+        if ($employeeId)
+            $horaires = User::find($employeeId)->horaires()
             ->whereYear('heure_debut', $year)
             ->whereMonth('heure_debut', $month)
             ->whereYear('heure_fin', $year)
             ->whereMonth('heure_fin', $month)
             ->with('absence')
             ->get();
-
         return Inertia::render('GererHoraires', [
             'employees' => $employees ?? null,
             'search' => request('input') ?? '',
             'employee' => User::find((int)(request('employee'))) ?? null,
-            "horaires" => $horaires ?? null
+            "horaires" => $horaires ?? null,
+            "year" => $year,
+            "month" => $month,
         ]);
     }
 }

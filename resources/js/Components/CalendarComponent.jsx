@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { Head, router } from "@inertiajs/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getDayNumber, formatMonth, daysInMonth } from "@/Utils/time";
 import { cn } from "@/Utils/cn";
@@ -16,12 +17,12 @@ export default function CalendarComponent({
     className,
     setWorkingDays,
     workingDays,
+    year,
+    month,
+    employeeId,
 }) {
-    const currentDate = useRef(getCurrentDate());
     const days = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
-    const [daysShift, setDaysShift] = useState(
-        getDayNumber(currentDate.current.month, currentDate.current.year)
-    );
+    const [daysShift, setDaysShift] = useState(getDayNumber(month, year));
     function verifyWorkingDate(day) {
         if (day === new Date().getDate() - 1) {
             return 4;
@@ -38,54 +39,70 @@ export default function CalendarComponent({
                 if (workingDay[0].present === 1) {
                     return 1;
                 } else {
-                    if (workingDay[0].absence.type === "absence") {
-                        return 2;
-                    } else {
+                    if (workingDay[0].absence?.type === "retard") {
                         return 3;
+                    } else {
+                        return 2;
                     }
                 }
             }
         }
     }
+    if (!workingDays || !employeeId) return <div>Pas de calendrier</div>;
     return (
         <div className={cn("p-5 shadow-2xl rounded-md", className)}>
             <div className="w-full flex justify-between mb-2">
                 <p className="font-bold text-xl">
-                    {formatMonth(parseInt(currentDate.current.month))}{" "}
-                    {currentDate.current.year}
+                    {formatMonth(parseInt(month))} {year}
                 </p>
                 <div>
                     <button className="bg-transparent">
                         <ChevronLeft
                             onClick={() => {
-                                currentDate.current = getCurrentDate([
-                                    parseInt(currentDate.current.year),
-                                    parseInt(currentDate.current.month) - 2,
-                                    currentDate.current.day,
-                                ]);
-                                setDaysShift(
-                                    getDayNumber(
-                                        currentDate.current.month,
-                                        currentDate.current.year
-                                    )
-                                );
+                                if (parseInt(month) === 1) {
+                                    router.get(
+                                        route("horaires", {
+                                            input: "",
+                                            employee: employeeId,
+                                            year: parseInt(year) - 1,
+                                            month: 12,
+                                        })
+                                    );
+                                } else {
+                                    router.get(
+                                        route("horaires", {
+                                            input: "",
+                                            employee: employeeId,
+                                            year: parseInt(year),
+                                            month: parseInt(month) - 1,
+                                        })
+                                    );
+                                }
                             }}
                         />
                     </button>
                     <button className="bg-transparent">
                         <ChevronRight
                             onClick={() => {
-                                currentDate.current = getCurrentDate([
-                                    parseInt(currentDate.current.year),
-                                    parseInt(currentDate.current.month),
-                                    currentDate.current.day,
-                                ]);
-                                setDaysShift(
-                                    getDayNumber(
-                                        currentDate.current.month,
-                                        currentDate.current.year
-                                    )
-                                );
+                                if (parseInt(month) === 12) {
+                                    router.get(
+                                        route("horaires", {
+                                            input: "",
+                                            employee: employeeId,
+                                            year: parseInt(year) + 1,
+                                            month: 1,
+                                        })
+                                    );
+                                } else {
+                                    router.get(
+                                        route("horaires", {
+                                            input: "",
+                                            employee: employeeId,
+                                            year: parseInt(year),
+                                            month: parseInt(month) + 1,
+                                        })
+                                    );
+                                }
                             }}
                         />
                     </button>
@@ -97,7 +114,7 @@ export default function CalendarComponent({
                 })}
             </div>
             <div className="w-full grid grid-cols-7 place-items-center">
-                {Array(currentDate.current.days)
+                {Array(daysInMonth(year, month))
                     .fill(0)
                     .map((_, index) => {
                         const isCheckedIn = verifyWorkingDate(index);
