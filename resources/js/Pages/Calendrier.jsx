@@ -45,9 +45,9 @@ export default function Calendrier({ auth, horaires, year, month }) {
                             </h2>
                         </div>
                     </div>
-                    <div className="bg-white overflow-hidden shadow-sm rounded-lg mt-6 w-[95%] md:w-full">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-lg mt-6 py-5 w-[95%] md:w-full">
                         <div className="space-y-3">
-                            <div className="p-3 space-y-3">
+                            <div className="px-3 space-y-3">
                                 <h2 className="text-xl md:text-3xl">
                                     Bienvenu {auth.user.nom}!
                                 </h2>
@@ -67,7 +67,32 @@ export default function Calendrier({ auth, horaires, year, month }) {
                                     Se Pointer
                                 </button>
                             </div>
-                            <div className="w-full flex justify-center items-center">
+                            <div className="w-full flex justify-center items-center flex-col">
+                                {horaire && (
+                                    <div className="flex justify-center items-center py-2 text-base md:text-xl">
+                                        {typeof horaire === "number" ? (
+                                            <p>
+                                                Vous n'avez pas de session de
+                                                travail
+                                            </p>
+                                        ) : (
+                                            <p>
+                                                Vous avez une session de{" "}
+                                                {
+                                                    horaire.heure_debut.split(
+                                                        " "
+                                                    )[1]
+                                                }{" "}
+                                                à{" "}
+                                                {
+                                                    horaire.heure_fin.split(
+                                                        " "
+                                                    )[1]
+                                                }
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
                                 <CalendarComponent
                                     workingDays={horaires}
                                     className="w-[95%] sm:w-1/2 h-3/4"
@@ -78,21 +103,6 @@ export default function Calendrier({ auth, horaires, year, month }) {
                                     handleDayClicked={setHoraire}
                                 />
                             </div>
-                            {horaire && (
-                                <div>
-                                    {typeof horaire === "number" ? (
-                                        <p>
-                                            Vous navez pas de seance se jours si
-                                        </p>
-                                    ) : (
-                                        <p>
-                                            Vous avex une session de{" "}
-                                            {horaire.heure_debut.split(" ")[1]}{" "}
-                                            a {horaire.heure_fin.split(" ")[1]}
-                                        </p>
-                                    )}
-                                </div>
-                            )}
                         </div>
                     </div>
                 </div>

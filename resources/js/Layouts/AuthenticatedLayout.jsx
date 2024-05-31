@@ -4,7 +4,7 @@ import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
-
+import { UserRound } from "lucide-react";
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -99,27 +99,17 @@ export default function Authenticated({ user, header, children }) {
                                         <span className="inline-flex rounded-md">
                                             <button
                                                 type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
+                                                className="inline-flex items-center px-3 py-2 border border-transparent leading-4 font-medium rounded-md  bg-white hover:text-gray-700 focus:outline-none focus:text-gray-700 transition ease-in-out duration-150 text-gray-500"
                                             >
-                                                {user.name}
-
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-6 w-6"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
+                                                <UserRound className=" w-10 h-7" />
                                             </button>
                                         </span>
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
+                                        <div className="font-medium text-sm pl-4 text-gray-500">
+                                            {user.nom}
+                                        </div>
                                         <Dropdown.Link
                                             href={route("profile.edit")}
                                         >
