@@ -169,27 +169,28 @@ export default function Authenticated({ user, header, children }) {
                         </div>
                     </div>
                 </div>
-
                 <div
                     className={
                         (showingNavigationDropdown ? "block" : "hidden") +
                         " sm:hidden"
                     }
                 >
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
-                            href={route("/")}
-                            active={route().current("/")}
-                        >
-                            Calendrier
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route("demande-conge")}
-                            active={route().current("demande-conge")}
-                        >
-                            Solde congé
-                        </ResponsiveNavLink>
-                    </div>
+                    {user.status === "employee" && (
+                        <div className="pt-2 pb-3 space-y-1">
+                            <ResponsiveNavLink
+                                href={route("/")}
+                                active={route().current("/")}
+                            >
+                                Calendrier
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("demande-conge")}
+                                active={route().current("demande-conge")}
+                            >
+                                Solde congé
+                            </ResponsiveNavLink>
+                        </div>
+                    )}
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
