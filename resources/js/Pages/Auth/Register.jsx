@@ -22,9 +22,6 @@ export default function Register({ directions }) {
             reset("password", "password_confirmation");
         };
     }, []);
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
 
     const submit = (e) => {
         e.preventDefault();
@@ -34,7 +31,7 @@ export default function Register({ directions }) {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title="S'inscrire" />
 
             <form onSubmit={submit}>
                 <div>

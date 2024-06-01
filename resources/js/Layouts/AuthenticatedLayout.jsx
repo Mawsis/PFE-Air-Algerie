@@ -46,7 +46,7 @@ export default function Authenticated({ user, header, children }) {
                                             href={route("horaires")}
                                             active={route().current("horaires")}
                                         >
-                                            Gerer Les Horaires
+                                            Gérer Les Horaires
                                         </NavLink>
                                         <NavLink
                                             href={route("demande-conge-chef")}
@@ -77,7 +77,7 @@ export default function Authenticated({ user, header, children }) {
                                                 "demandes-inscription"
                                             )}
                                         >
-                                            Demandes d'inscription
+                                            Demandes d'inscriptions
                                         </NavLink>
                                         <NavLink
                                             href={route("employees")}
@@ -85,7 +85,7 @@ export default function Authenticated({ user, header, children }) {
                                                 "employees"
                                             )}
                                         >
-                                            Gerer les comptes
+                                            Gérer les comptes
                                         </NavLink>
                                     </>
                                 )}

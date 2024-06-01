@@ -18,7 +18,6 @@ const getCurrentDate = () => {
 export default function Calendrier({ auth, horaires, year, month }) {
     const currentTime = useTime();
     const [horaire, setHoraire] = useState(null);
-    console.log(horaire);
     return (
         <AuthenticatedLayout
             user={auth.user}

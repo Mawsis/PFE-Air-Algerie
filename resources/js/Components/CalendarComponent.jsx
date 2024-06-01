@@ -26,7 +26,6 @@ export default function CalendarComponent({
             const workingDay = workingDays.filter((d) => {
                 return new Date(d.heure_debut).getDate() - 1 === day;
             });
-            console.log(workingDay);
             if (!workingDay[0]) {
                 return 0;
             } else {

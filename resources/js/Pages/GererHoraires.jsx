@@ -106,7 +106,6 @@ const GererHoraires = ({
         }
     };
     const updateData = (debut, fin) => {
-        console.log(debut, fin);
         if (debut === 0) {
             setData({
                 heure_fin: newTime(data.heure_fin, fin),
@@ -121,24 +120,21 @@ const GererHoraires = ({
             });
         }
     };
-    useEffect(() => {
-        console.log(data);
-    }, [data]);
     return (
         <AuthenticatedLayout
             user={auth.user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 leading-tight">
-                    Gerer les Horaires des employes
+                    Gérer les Horaires des employés
                 </h2>
             }
         >
-            <Head title="Demande Conge" />
+            <Head title="Gérer Horaires" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 relative">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex justify-between items-center">
                         <h2 className=" text-xl font-semibold w-full">
-                            Chercher employe:
+                            Chercher employé:
                         </h2>
                         <div className="flex flex-col w-full ml-auto">
                             <TextInput
@@ -188,7 +184,7 @@ const GererHoraires = ({
                             <p className="text-xl font-semibold">
                                 {employee
                                     ? employee.nom + " " + employee.prenom
-                                    : "Selectionner un employe"}
+                                    : "Selectionner un employé"}
                             </p>
 
                             {data.horaireId && (
