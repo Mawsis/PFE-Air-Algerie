@@ -3,11 +3,13 @@ import ApplicationLogo from "@/Components/ApplicationLogo";
 import Dropdown from "@/Components/Dropdown";
 import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
-import { UserRound } from "lucide-react";
+import { Link, router, usePage } from "@inertiajs/react";
+import { Bell, Cross, UserRound, X } from "lucide-react";
 export default function Authenticated({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
+    const notifications = usePage().props.notifications;
+
     return (
         <div className="min-h-screen bg-custom">
             <nav className="bg-white border-b border-gray-100">
@@ -93,7 +95,95 @@ export default function Authenticated({ user, header, children }) {
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
+                            <div className="ms-3 relative flex">
+                                {notifications && (
+                                    <Dropdown className="">
+                                        <Dropdown.Trigger>
+                                            <span className="inline-flex rounded-md">
+                                                <button
+                                                    type="button"
+                                                    className="relative inline-flex items-center px-3 py-2 border border-transparent leading-4 font-medium rounded-md  bg-white hover:text-gray-700 focus:outline-none focus:text-gray-700 transition ease-in-out duration-150 text-gray-500"
+                                                >
+                                                    <Bell className=" w-10 h-7" />
+                                                    {notifications.length >
+                                                        0 && (
+                                                        <div className="absolute top-2 right-5 bg-red-500 size-3 rounded-full"></div>
+                                                    )}
+                                                </button>
+                                            </span>
+                                        </Dropdown.Trigger>
+
+                                        <Dropdown.Content>
+                                            <div className="font-medium text-sm pl-4 text-gray-500">
+                                                {user.status === "employee"
+                                                    ? "Notifications de Congés"
+                                                    : "Notifications d'absences"}
+                                            </div>
+                                            {notifications.map(
+                                                (notification) => (
+                                                    <div
+                                                        key={notification.id}
+                                                        className="flex items-center justify-between"
+                                                    >
+                                                        {notification
+                                                            .demande_conge
+                                                            .status ===
+                                                        "refuse" ? (
+                                                            <div className="block text-red-400 font-semibold w-full px-4 py-2 text-start text-base  leading-5 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out ">
+                                                                {
+                                                                    notification.message
+                                                                }
+                                                            </div>
+                                                        ) : (
+                                                            <a
+                                                                href={
+                                                                    user.status ===
+                                                                    "employee"
+                                                                        ? route(
+                                                                              "demander-conge.pdf",
+                                                                              {
+                                                                                  demande:
+                                                                                      notification.demande_conge_id,
+                                                                              }
+                                                                          )
+                                                                        : route(
+                                                                              "absences.employee",
+                                                                              {
+                                                                                  employee:
+                                                                                      notification.user_id,
+                                                                              }
+                                                                          )
+                                                                }
+                                                                className="block text-green-400 font-semibold w-full px-4 py-2 text-start text-base  leading-5 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out "
+                                                            >
+                                                                <div>
+                                                                    {
+                                                                        notification.message
+                                                                    }
+                                                                </div>
+                                                            </a>
+                                                        )}
+
+                                                        {!(
+                                                            user.status ===
+                                                            "employee"
+                                                        ) && (
+                                                            <X
+                                                                onClick={() => {
+                                                                    router.delete(
+                                                                        "/notifications/" +
+                                                                            notification.id
+                                                                    );
+                                                                }}
+                                                                className="block px-4 py-2 size-14 text-red-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out "
+                                                            />
+                                                        )}
+                                                    </div>
+                                                )
+                                            )}
+                                        </Dropdown.Content>
+                                    </Dropdown>
+                                )}
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <span className="inline-flex rounded-md">

@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
+import { Head, router } from "@inertiajs/react";
 import illustration from "@/Assets/illsutration.jpg";
 import { formatTime } from "@/Utils/time";
 import useTime from "@/Hooks/useTime";
@@ -15,9 +15,16 @@ const getCurrentDate = () => {
     return `${year}-${month}-${day}`;
 };
 
-export default function Calendrier({ auth, horaires, year, month }) {
+export default function Calendrier({
+    auth,
+    horaires,
+    actualHoraire,
+    year,
+    month,
+}) {
     const currentTime = useTime();
     const [horaire, setHoraire] = useState(null);
+    console.log(actualHoraire);
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -50,11 +57,27 @@ export default function Calendrier({ auth, horaires, year, month }) {
                                 <h2 className="text-xl md:text-3xl">
                                     Bienvenu {auth.user.nom}!
                                 </h2>
-                                <div className="text-base md:text-xl">
-                                    Vous avez une horaire de travail maintenant
-                                    ente <span className="text-main">8:00</span>{" "}
-                                    et <span className="text-main">16:00</span>
-                                </div>
+                                {actualHoraire && (
+                                    <div className="text-base md:text-xl">
+                                        Vous avez une horaire de travail
+                                        maintenant ente{" "}
+                                        <span className="text-main">
+                                            {
+                                                actualHoraire.heure_debut.split(
+                                                    " "
+                                                )[0]
+                                            }
+                                        </span>{" "}
+                                        et{" "}
+                                        <span className="text-main">
+                                            {
+                                                actualHoraire.heure_fin.split(
+                                                    " "
+                                                )[1]
+                                            }
+                                        </span>
+                                    </div>
+                                )}
                             </div>
                             <img
                                 src={illustration}
@@ -62,9 +85,28 @@ export default function Calendrier({ auth, horaires, year, month }) {
                                 className="md:m-3 h-96 w-full object-cover"
                             />
                             <div className="w-full flex justify-center items-center">
-                                <button className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold text-lg border border-main hover:bg-white hover:text-main ">
-                                    Se Pointer
-                                </button>
+                                {actualHoraire ? (
+                                    actualHoraire.present ? (
+                                        <div className="bg-green-400 flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold text-lg border border-green-400 hover:bg-white hover:text-green-400">
+                                            Vous êtes présent
+                                        </div>
+                                    ) : (
+                                        <button
+                                            onClick={() => {
+                                                router.put(
+                                                    route("horaires.put")
+                                                );
+                                            }}
+                                            className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold text-lg border border-main hover:bg-white hover:text-main"
+                                        >
+                                            Se pointer
+                                        </button>
+                                    )
+                                ) : (
+                                    <div className="bg-main flex justify-center items-center gap-2 px-3 py-2 rounded-md text-white font-semibold text-lg border border-main">
+                                        Vous n'avez pas de session de travail
+                                    </div>
+                                )}
                             </div>
                             <div className="w-full flex justify-center items-center flex-col">
                                 {horaire && (

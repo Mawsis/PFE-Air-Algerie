@@ -69,16 +69,16 @@ export default function PopoverWrapper({ children, employee }) {
                         )}
                     </div>
                     {format && (
-                        <Link
+                        <a
                             className="bg-main w-full flex justify-center items-center gap-2 px-3 py-1 rounded-md text-white font-semibold border border-main hover:bg-white hover:text-main "
                             href={route("absences.rapport", {
-                                employee: employee.id,
+                                employeeid: employee.id,
                                 format: format,
                                 date: date,
                             })}
                         >
                             Générer le rapport
-                        </Link>
+                        </a>
                     )}
                 </div>
             </PopoverContent>

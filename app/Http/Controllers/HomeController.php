@@ -17,6 +17,10 @@ class HomeController extends Controller
             $year = date('Y');
             $month = date('m');
         }
+        $horaire = auth()->user()->horaires()
+            ->where('heure_debut', '<=', now())
+            ->where('heure_fin', '>=', now())
+            ->first();
         $horaires = auth()->user()->horaires()
             ->whereYear('heure_debut', $year)
             ->whereMonth('heure_debut', $month)
@@ -25,6 +29,7 @@ class HomeController extends Controller
             ->with('absence')
             ->get();
         return Inertia::render('Calendrier', [
+            "actualHoraire" => $horaire ?? null,
             "horaires" => $horaires,
             "year" => $year,
             "month" => $month,

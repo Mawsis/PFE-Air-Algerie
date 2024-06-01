@@ -64,4 +64,15 @@ class HoraireController extends Controller
         ]);
         return redirect()->back();
     }
+    public function put()
+    {
+        $horaire = auth()->user()->horaires()
+            ->where('heure_debut', '<=', now())
+            ->where('heure_fin', '>=', now())
+            ->first();
+        $horaire->update([
+            "present" => true
+        ]);
+        return redirect()->back();
+    }
 }

@@ -19,4 +19,16 @@ class DemandeConge extends Model
     {
         return Carbon::parse($this->date_debut)->diffInDays(Carbon::parse($this->date_fin));
     }
+    public function demandeCongeNotification()
+    {
+        return $this->hasOne(DemandeCongeNotification::class);
+    }
+    public function chef()
+    {
+        return $this->belongsTo(User::class, "chef_id");
+    }
+    public function admin()
+    {
+        return $this->belongsTo(User::class, "admin_id");
+    }
 }

@@ -1,4 +1,4 @@
-import { router } from "@inertiajs/react";
+import { router, usePage } from "@inertiajs/react";
 import React, { useState } from "react";
 
 const getStatusColor = (status) => {
@@ -15,33 +15,17 @@ const getStatusColor = (status) => {
 };
 
 const DemandeCongeEnvoyeChef = ({ demandes }) => {
+    const auth = usePage().props.auth;
     const [demandesS, setDemandesS] = useState(demandes);
     const changerStatus = (id, status) => {
-        const demandeIndex = demandes.findIndex((demande) => demande.id === id);
-        if (demandeIndex === -1) {
-            return;
-        }
-        let newStatus = "en attente";
-        if (status === "en attente") {
-            newStatus = "approuvée";
-        } else if (status === "approuvée") {
-            newStatus = "refuse";
-        } else {
-            newStatus = "en attente";
-        }
-        const updatedDemandes = [...demandes];
-        updatedDemandes[demandeIndex] = {
-            ...updatedDemandes[demandeIndex],
-            status: newStatus,
-        };
         router.patch(
             route(
                 "demande-conge-chef.patch",
                 {
                     demande: id,
-                    status: newStatus,
+                    status: status,
                 },
-                { preserveState: true }
+                { preserveScroll: true }
             )
         );
         // Set the state with the new array
@@ -60,7 +44,7 @@ const DemandeCongeEnvoyeChef = ({ demandes }) => {
             </thead>
             <tbody>
                 {/* Map over the demandes de conges and render a table row for each demande */}
-                {demandesS.map((demande) => (
+                {demandes.map((demande) => (
                     <tr key={demande.id} className="border-t text-lg">
                         <td className="py-2">{demande.employee.nom}</td>
                         <td className="py-2">
@@ -68,15 +52,39 @@ const DemandeCongeEnvoyeChef = ({ demandes }) => {
                         </td>
                         <td className="py-2">{demande.date_debut}</td>
                         <td className="py-2">{demande.date_fin}</td>
-                        <td
-                            className={`py-2 cursor-pointer ${getStatusColor(
-                                demande.status
-                            )}`}
-                            onClick={(e) =>
-                                changerStatus(demande.id, demande.status)
-                            }
-                        >
-                            {demande.status}
+                        <td className="py-2 flex justify-center items-center">
+                            <select
+                                defaultValue={demande.status}
+                                className={`${
+                                    demande.status === "approuvée" ||
+                                    demande.status === "approuvéeChef"
+                                        ? "bg-green-500 text-white"
+                                        : demande.status === "en attente"
+                                        ? "bg-orange-500 text-white"
+                                        : demande.status === "refuse"
+                                        ? "bg-main text-white"
+                                        : ""
+                                } border font-bol border-gray-300 text-gray-700 text-base rounded-lg block`}
+                                required
+                                onChange={(e) => {
+                                    changerStatus(demande.id, e.target.value);
+                                }}
+                            >
+                                <option value="approuvéeChef">
+                                    {auth.user.status === "admin"
+                                        ? "approuvéeChef"
+                                        : "approuvée"}
+                                </option>
+                                {auth.user.status === "chef" && (
+                                    <option value="en attente">
+                                        en attente
+                                    </option>
+                                )}
+                                {auth.user.status === "admin" && (
+                                    <option value="approuvée">approuvée</option>
+                                )}
+                                <option value="refuse">refuse</option>
+                            </select>
                         </td>
                     </tr>
                 ))}

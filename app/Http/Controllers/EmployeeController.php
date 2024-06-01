@@ -18,9 +18,13 @@ class EmployeeController extends Controller
     }
     public function patch(User $employee)
     {
-
-        if (request('status'))
-            $employee->status = request('status');
+        if (request('status')) {
+            if (request('status') === "none") {
+                $employee->status = null;
+            } else {
+                $employee->status = request('status');
+            }
+        }
         if (request('direction_id'))
             $employee->direction_id = request('direction_id') === "" ? null : request('direction_id');
         if (request('type'))

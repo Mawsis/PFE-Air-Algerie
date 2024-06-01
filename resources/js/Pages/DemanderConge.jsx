@@ -34,7 +34,7 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex flex-col">
                         <h2>Demander un conge</h2>
                         <form onSubmit={submit} className="mt-6 space-y-6">
-                            <div className="flex px-20 justify-between items-center w-full">
+                            <div className="flex flex-col sm:flex-row gap-10 sm:gap-0 px-20 justify-between items-center w-full">
                                 <div>
                                     <div className="flex justify-center items-center gap-10">
                                         <InputLabel
@@ -58,14 +58,6 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
                                     <InputError
                                         className="mt-2"
                                         message={errors.date_debut}
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.status}
-                                    />
-                                    <InputError
-                                        className="mt-2"
-                                        message={errors.user_id}
                                     />
                                 </div>
                                 <div>

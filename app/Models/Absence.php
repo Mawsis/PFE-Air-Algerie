@@ -18,4 +18,8 @@ class Absence extends Model
     {
         return $this->belongsTo(Horaire::class);
     }
+    public function absenceNotification()
+    {
+        return $this->hasOne(AbsenceNotification::class);
+    }
 }

@@ -98,7 +98,8 @@ const Employees = ({ auth, employees, directions }) => {
                                             <td className="border px-4 py-2">
                                                 <select
                                                     defaultValue={
-                                                        employee.status
+                                                        employee.status ??
+                                                        "none"
                                                     }
                                                     key={employee.id}
                                                     className={`${
@@ -130,7 +131,7 @@ const Employees = ({ auth, employees, directions }) => {
                                                     <option value="chef">
                                                         chef
                                                     </option>
-                                                    <option value="">
+                                                    <option value="none">
                                                         None
                                                     </option>
                                                 </select>
