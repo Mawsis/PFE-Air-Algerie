@@ -7,7 +7,6 @@ import { PlusCircle } from "lucide-react";
 import InputError from "@/Components/InputError";
 import PopoverWrapper from "@/Components/PopoverWrapper";
 const Absences = ({ auth, direction, absences, employee }) => {
-    console.log(absences);
     const excuse = (id) => {
         router.patch(route("absences.patch", { absence: id }));
     };

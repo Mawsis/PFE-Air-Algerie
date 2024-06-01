@@ -11,11 +11,11 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
             user={auth.user}
             header={
                 <h2 className="font-semibold text-base md:text-xl text-gray-800 leading-tight">
-                    Demande de congé
+                    Demandes de congés
                 </h2>
             }
         >
-            <Head title="Demande Conge" />
+            <Head title="Demandes Congés" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-2 md:p-6 gap-3 flex flex-col">
@@ -41,7 +41,7 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
                         </div>
                         <div className="text-gray-700 flex justify-between items-center">
                             <h2 className=" font-semibold text-sm sm:text-base md:text-lg w-32 sm:w-full">
-                                Les demandes de conges envoyées:
+                                Les demandes de congés envoyées:
                             </h2>
                             <Link
                                 href={route("demander-conge.create")}

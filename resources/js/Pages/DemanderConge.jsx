@@ -14,7 +14,6 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
             status: "en attente",
             user_id: user.id,
         });
-    console.log(errors);
     const submit = (e) => {
         e.preventDefault();
 
@@ -29,7 +28,7 @@ const DemandeConge = ({ auth, demandes, soldes }) => {
                 </h2>
             }
         >
-            <Head title="Demande Conge" />
+            <Head title="Demande Congé" />
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 gap-3 flex flex-col">

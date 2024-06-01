@@ -46,7 +46,7 @@ export default function Authenticated({ user, header, children }) {
                                             href={route("horaires")}
                                             active={route().current("horaires")}
                                         >
-                                            Gerer Les Horaires
+                                            Gérer Les Horaires
                                         </NavLink>
                                         <NavLink
                                             href={route("demande-conge-chef")}
@@ -77,7 +77,7 @@ export default function Authenticated({ user, header, children }) {
                                                 "demandes-inscription"
                                             )}
                                         >
-                                            Demandes d'inscription
+                                            Demandes d'inscriptions
                                         </NavLink>
                                         <NavLink
                                             href={route("employees")}
@@ -85,7 +85,7 @@ export default function Authenticated({ user, header, children }) {
                                                 "employees"
                                             )}
                                         >
-                                            Gerer les comptes
+                                            Gérer les comptes
                                         </NavLink>
                                     </>
                                 )}
@@ -169,27 +169,28 @@ export default function Authenticated({ user, header, children }) {
                         </div>
                     </div>
                 </div>
-
                 <div
                     className={
                         (showingNavigationDropdown ? "block" : "hidden") +
                         " sm:hidden"
                     }
                 >
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink
-                            href={route("/")}
-                            active={route().current("/")}
-                        >
-                            Calendrier
-                        </ResponsiveNavLink>
-                        <ResponsiveNavLink
-                            href={route("demande-conge")}
-                            active={route().current("demande-conge")}
-                        >
-                            Solde congé
-                        </ResponsiveNavLink>
-                    </div>
+                    {user.status === "employee" && (
+                        <div className="pt-2 pb-3 space-y-1">
+                            <ResponsiveNavLink
+                                href={route("/")}
+                                active={route().current("/")}
+                            >
+                                Calendrier
+                            </ResponsiveNavLink>
+                            <ResponsiveNavLink
+                                href={route("demande-conge")}
+                                active={route().current("demande-conge")}
+                            >
+                                Solde congé
+                            </ResponsiveNavLink>
+                        </div>
+                    )}
 
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">

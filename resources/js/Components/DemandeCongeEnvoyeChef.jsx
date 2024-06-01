@@ -15,7 +15,6 @@ const getStatusColor = (status) => {
 };
 
 const DemandeCongeEnvoyeChef = ({ demandes }) => {
-    console.log(demandes);
     const [demandesS, setDemandesS] = useState(demandes);
     const changerStatus = (id, status) => {
         const demandeIndex = demandes.findIndex((demande) => demande.id === id);

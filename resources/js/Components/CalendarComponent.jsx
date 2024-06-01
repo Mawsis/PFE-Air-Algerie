@@ -3,15 +3,6 @@ import { Head, router } from "@inertiajs/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { getDayNumber, formatMonth, daysInMonth } from "@/Utils/time";
 import { cn } from "@/Utils/cn";
-function getCurrentDate(optionalDate = undefined) {
-    const date = optionalDate ? new Date(...optionalDate) : new Date();
-    return {
-        month: String(date.getMonth() + 1).padStart(2, "0"),
-        year: String(date.getFullYear()),
-        days: daysInMonth(date.getFullYear(), date.getMonth() + 1),
-        day: String(date.getDate()).padStart(2, "0"),
-    };
-}
 
 export default function CalendarComponent({
     className,
@@ -30,8 +21,6 @@ export default function CalendarComponent({
             parseInt(month) === new Date().getMonth() + 1
         ) {
             return 4;
-        } else if (day > new Date().getDate() - 1) {
-            return 5;
         } else {
             // Verify if the date is a working day
             const workingDay = workingDays.filter((d) => {
@@ -40,6 +29,9 @@ export default function CalendarComponent({
             if (!workingDay[0]) {
                 return 0;
             } else {
+                if (day > new Date().getDate() - 1) {
+                    return 5;
+                }
                 if (workingDay[0].present === 1) {
                     return 1;
                 } else {
