@@ -6,6 +6,7 @@ use App\Http\Controllers\DemandeInscriptionController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HoraireController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -14,7 +15,11 @@ use Inertia\Inertia;
 
 
 Route::get("/pdf", [AbsenceController::class, 'pdf'])->name('pdf');
-
+Route::get("/data", function () {
+    return response()->json([
+        "employee" => "aaaa"
+    ]);
+})->name('data');
 Route::middleware('auth')->group(function () {
     Route::get('/wait', function () {
         return Inertia::render('AttenteAdmin');
@@ -42,6 +47,8 @@ Route::middleware('auth')->group(function () {
             Route::delete('/horaires/{horaireId}', [HoraireController::class, 'delete'])->name('horaires.delete');
             Route::patch('/horaires/{horaireId}', [HoraireController::class, 'update'])->name('horaires.update');
             Route::post('/horaires', [HoraireController::class, 'store'])->name('horaires.store');
+
+            Route::delete("/notifications/{notification}", [NotificationController::class, 'delete'])->name('notifications.delete');
         });
         Route::middleware('isAdmin')->group(function () {
             Route::get('/demandes_inscription', [DemandeInscriptionController::class, 'index'])->name('demandes-inscription');

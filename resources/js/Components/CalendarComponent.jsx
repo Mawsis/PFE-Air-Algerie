@@ -150,7 +150,7 @@ export default function CalendarComponent({
                                 ? "bg-yellow-500"
                                 : isCheckedIn === 4
                                 ? "bg-blue-800"
-                                : "bg-gray-500 !text-black";
+                                : "bg-gray-500 ";
                         return (
                             <div
                                 key={index}

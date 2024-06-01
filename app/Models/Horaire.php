@@ -11,7 +11,7 @@ class Horaire extends Model
 
     public function employee()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function absence()
     {

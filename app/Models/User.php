@@ -76,4 +76,19 @@ class User extends Authenticatable
     {
         return $this->hasOne(Direction::class, 'chef_id');
     }
+    public function absenceNotifications()
+    {
+        return $this->hasMany(AbsenceNotification::class);
+    }
+
+    public function notifications()
+    {
+        $notifications = collect();
+        if ($this->status == 'admin') {
+            $notifications = AbsenceNotification::with('absence')->with('user')->get();
+        } elseif ($this->status == 'chef') {
+            $notifications = $this->absenceNotifications()->with('absence')->with('user')->get();
+        }
+        return $notifications;
+    }
 }

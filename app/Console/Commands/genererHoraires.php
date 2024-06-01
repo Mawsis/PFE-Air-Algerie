@@ -60,6 +60,7 @@ class genererHoraires extends Command
                     "heure_debut" => $date,
                     "heure_fin" => $date->copy()->setTime(16, 0, 0)
                 ]);
+                $this->line("Creation d'une horaire pour <fg=red>{$user->nom}</> de <fg=green>{$date->format('Y-m-d H:i:s')} a {$date->copy()->setTime(16, 0, 0)->format('Y-m-d H:i:s')}</>");
             }
             $date = $date->addDays(1);
         }
@@ -75,6 +76,7 @@ class genererHoraires extends Command
                 "heure_debut" => $date,
                 "heure_fin" => $finDate
             ]);
+            $this->line("Creation d'une horaire pour <fg=red>{$user->nom}</> de <fg=green>{$date->format('Y-m-d H:i:s')} a {$finDate->format('Y-m-d H:i:s')}</>");
             $date = $finDate;
             $date = $date->addDays(1);
         }
@@ -91,6 +93,7 @@ class genererHoraires extends Command
                 "heure_debut" => $date,
                 "heure_fin" => $finDate
             ]);
+            $this->line("Creation d'une horaire pour <fg=red>{$user->nom}</> de <fg=yellow>{$date->format('Y-m-d H:i:s')} a {$finDate->format('Y-m-d H:i:s')}</>");
             $date = $finDate;
             $date = $date->addDays(1);
         }
