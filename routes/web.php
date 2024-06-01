@@ -40,13 +40,14 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
             Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
-            Route::get('/absences/{employee}/{format}/{date}', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+            Route::get('/absences/{employeie}/{format}/{date}', [AbsenceController::class, 'rapport'])->name('absences.rapport');
             Route::patch('/absences/{absence}', [AbsenceController::class, 'patch'])->name('absences.patch');
 
             Route::get('/horaires', [HoraireController::class, 'index'])->name('horaires');
             Route::delete('/horaires/{horaireId}', [HoraireController::class, 'delete'])->name('horaires.delete');
             Route::patch('/horaires/{horaireId}', [HoraireController::class, 'update'])->name('horaires.update');
             Route::post('/horaires', [HoraireController::class, 'store'])->name('horaires.store');
+            Route::put("/horaires", [HoraireController::class, 'put'])->name('horaires.put');
 
             Route::delete("/notifications/{notification}", [NotificationController::class, 'delete'])->name('notifications.delete');
         });
