@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Head, router } from "@inertiajs/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ReceiptEuroIcon } from "lucide-react";
 import { getDayNumber, formatMonth, daysInMonth } from "@/Utils/time";
 import { cn } from "@/Utils/cn";
 
@@ -29,7 +29,7 @@ export default function CalendarComponent({
             if (!workingDay[0]) {
                 return 0;
             } else {
-                if (day > new Date().getDate() - 1) {
+                if (day >= new Date().getDate() - 1) {
                     return 5;
                 }
                 if (workingDay[0].present === 1) {
@@ -37,8 +37,11 @@ export default function CalendarComponent({
                 } else {
                     if (workingDay[0].absence?.type === "retard") {
                         return 3;
-                    } else {
+                    } else if (workingDay[0].absence !== null) {
+                        console.log(workingDay[0].absence);
                         return 2;
+                    } else {
+                        return 0;
                     }
                 }
             }

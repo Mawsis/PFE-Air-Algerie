@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->date('date_debut');
             $table->date('date_fin');
-            $table->enum('status', ['en attente', 'approuvée', 'refuse']);
-
+            $table->enum('status', ['en attente', "approuvéeChef", 'approuvée', 'refuse']);
+            $table->foreignId("chef_id")->nullable();
+            $table->foreignId("admin_id")->nullable();
             $table->foreignId('user_id');
 
             $table->timestamps();

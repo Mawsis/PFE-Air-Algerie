@@ -57,8 +57,9 @@ class AbsenceController extends Controller
         return redirect()->back();
     }
 
-    public function rapport(User $employee, string $format, string $date)
+    public function rapport($employeeid, string $format, string $date)
     {
+        $employee = User::find($employeeid);
         if ($format === "year") {
             $absences = $employee->absences()->whereHas('horaire', function ($query) use ($date) {
                 $query->whereYear('heure_debut', $date);
@@ -71,6 +72,6 @@ class AbsenceController extends Controller
         return Pdf::view('pdf', [
             "absences" => $absences,
             "employee" => User::where("id", $employee->id)->with("direction")->first(),
-        ])->format('a4')->name('invoice.pdf');
+        ])->format('a4')->name('rapportAbsence.pdf');
     }
 }

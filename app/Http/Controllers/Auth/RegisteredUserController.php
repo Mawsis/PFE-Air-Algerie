@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Direction;
+use App\Models\Horaire;
 use App\Models\SoldeConge;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -56,7 +57,6 @@ class RegisteredUserController extends Controller
             'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
             'password.confirmed' => 'Les mots de passe ne correspondent pas.',
         ]);
-
         $user = User::create([
             'nom' => $request->nom,
             'prenom' => $request->prenom,
@@ -71,10 +71,61 @@ class RegisteredUserController extends Controller
             'jours_consommes' => 0,
             'annee' => date('Y'),
         ]);
+        $this->fillHoraires($user);
         event(new Registered($user));
 
         Auth::login($user);
 
         return redirect(route('/', absolute: false));
+    }
+
+    public function fillHoraires(User $user)
+    {
+        if ($user->direction->nom === "Maintenance") {
+            $user->update([
+                "type" => "Tournant2"
+            ]);
+            $date = now()->setTime(8, 0, 0);
+            while ($date->year == now()->year) {
+                $finDate = $date->copy()->addHours(12);
+                Horaire::create([
+                    "user_id" => $user->id,
+                    "heure_debut" => $date,
+                    "heure_fin" => $finDate
+                ]);
+                $date = $finDate;
+                $date = $date->addDays(1);
+            }
+        } elseif ($user->direction->nom === "Securite") {
+            $user->update([
+                "type" => "Tournant3"
+            ]);
+            $date = now()->setTime(8, 0, 0);
+            while ($date->year == now()->year) {
+                $finDate = $date->copy()->addHours(8);
+                Horaire::create([
+                    "user_id" => $user->id,
+                    "heure_debut" => $date,
+                    "heure_fin" => $finDate
+                ]);
+                $date = $finDate;
+                $date = $date->addDays(1);
+            }
+        } else {
+
+            $date = now()->setTime(8, 0, 0);
+            while ($date->year == now()->year) {
+                // Check if the current day is not Friday or Saturday
+                if ($date->dayOfWeek !== 5 && $date->dayOfWeek !== 6) {
+                    // Create an horaire from 8:00 to 16:00 for the current day
+                    Horaire::create([
+                        "user_id" => $user->id,
+                        "heure_debut" => $date,
+                        "heure_fin" => $date->copy()->setTime(16, 0, 0)
+                    ]);
+                }
+                $date = $date->addDays(1);
+            }
+        }
     }
 }

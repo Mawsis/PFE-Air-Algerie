@@ -32,6 +32,7 @@ class CreerSoldeConge extends Command
 
         // Create a new soldeConge for each employee
         foreach ($employees as $employee) {
+            $this->line("Création d'un <fg=red>solde de congé</> pour <fg=green>{$employee->nom}</> pour l'année <fg=yellow>" . date('Y') . "</>");
             SoldeConge::create([
                 "annee" => date('Y'),
                 "jours_total" => 30,

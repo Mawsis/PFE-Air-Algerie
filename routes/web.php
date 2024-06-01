@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/demande_conge', [DemandeCongeController::class, 'index'])->name('demande-conge');
         Route::get('/demander_conge', [DemandeCongeController::class, 'create'])->name('demander-conge.create');
         Route::post('/demander_conge', [DemandeCongeController::class, 'store'])->name('demander-conge.store');
+        Route::get('/demander_conge/pdf/{demande}', [DemandeCongeController::class, 'pdf'])->name('demander-conge.pdf');
 
         Route::middleware('isChef')->group(function () {
             Route::get('/demande_conge_chef', [DemandeCongeController::class, 'indexChef'])->name('demande-conge-chef');
@@ -40,7 +41,7 @@ Route::middleware('auth')->group(function () {
 
             Route::get('/absences', [AbsenceController::class, 'index'])->name('absences');
             Route::get('/absences/{employee}', [AbsenceController::class, 'show'])->name('absences.employee');
-            Route::get('/absences/{employeie}/{format}/{date}', [AbsenceController::class, 'rapport'])->name('absences.rapport');
+            Route::get('/absences/{employeeid}/{format}/{date}', [AbsenceController::class, 'rapport'])->name('absences.rapport');
             Route::patch('/absences/{absence}', [AbsenceController::class, 'patch'])->name('absences.patch');
 
             Route::get('/horaires', [HoraireController::class, 'index'])->name('horaires');

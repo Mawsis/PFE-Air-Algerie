@@ -115,39 +115,69 @@ export default function Authenticated({ user, header, children }) {
 
                                         <Dropdown.Content>
                                             <div className="font-medium text-sm pl-4 text-gray-500">
-                                                Notifications d'absences
+                                                {user.status === "employee"
+                                                    ? "Notifications de Congés"
+                                                    : "Notifications d'absences"}
                                             </div>
                                             {notifications.map(
                                                 (notification) => (
-                                                    <div className="flex items-center justify-between">
-                                                        <Dropdown.Link
-                                                            key={
-                                                                notification.id
-                                                            }
-                                                            href={route(
-                                                                "absences.employee",
-                                                                {
-                                                                    employee:
-                                                                        notification.user_id,
-                                                                }
-                                                            )}
-                                                            className="flex justify-between items-center"
-                                                        >
-                                                            <div>
+                                                    <div
+                                                        key={notification.id}
+                                                        className="flex items-center justify-between"
+                                                    >
+                                                        {notification
+                                                            .demande_conge
+                                                            .status ===
+                                                        "refuse" ? (
+                                                            <div className="block text-red-400 font-semibold w-full px-4 py-2 text-start text-base  leading-5 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out ">
                                                                 {
                                                                     notification.message
                                                                 }
                                                             </div>
-                                                        </Dropdown.Link>
-                                                        <X
-                                                            onClick={() => {
-                                                                router.delete(
-                                                                    "/notifications/" +
-                                                                        notification.id
-                                                                );
-                                                            }}
-                                                            className="block px-4 py-2 size-14 text-red-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out "
-                                                        />
+                                                        ) : (
+                                                            <a
+                                                                href={
+                                                                    user.status ===
+                                                                    "employee"
+                                                                        ? route(
+                                                                              "demander-conge.pdf",
+                                                                              {
+                                                                                  demande:
+                                                                                      notification.demande_conge_id,
+                                                                              }
+                                                                          )
+                                                                        : route(
+                                                                              "absences.employee",
+                                                                              {
+                                                                                  employee:
+                                                                                      notification.user_id,
+                                                                              }
+                                                                          )
+                                                                }
+                                                                className="block text-green-400 font-semibold w-full px-4 py-2 text-start text-base  leading-5 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out "
+                                                            >
+                                                                <div>
+                                                                    {
+                                                                        notification.message
+                                                                    }
+                                                                </div>
+                                                            </a>
+                                                        )}
+
+                                                        {!(
+                                                            user.status ===
+                                                            "employee"
+                                                        ) && (
+                                                            <X
+                                                                onClick={() => {
+                                                                    router.delete(
+                                                                        "/notifications/" +
+                                                                            notification.id
+                                                                    );
+                                                                }}
+                                                                className="block px-4 py-2 size-14 text-red-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out "
+                                                            />
+                                                        )}
                                                     </div>
                                                 )
                                             )}
